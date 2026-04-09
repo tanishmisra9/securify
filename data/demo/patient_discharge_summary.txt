@@ -1,0 +1,22 @@
+[SYNTHETIC DEMO FILE — all values are fictional]
+
+Patient Discharge Summary
+Patient Name: Elena Marlowe
+Date of Birth: April 14, 1986
+Medical Record Number: MRN-482731
+Admitting Physician: Dr. Caleb Voss
+Hospital: Northfield Regional Medical Center
+Admission Date: February 02, 2026
+Discharge Date: February 05, 2026
+Primary Diagnosis: Atrial Fibrillation
+Secondary Diagnosis: Mild Iron Deficiency Anemia
+Social Security Number: 742-19-6083
+Emergency Contact: Nolan Mercer
+Emergency Contact Phone: 317-555-9084
+
+Discharge Instructions:
+Continue all prescribed medications as directed and maintain adequate hydration each day.
+Avoid strenuous activity for one week and monitor for shortness of breath, chest discomfort, or dizziness.
+Seek immediate urgent care if symptoms worsen before the scheduled follow-up.
+
+Follow-Up Appointment Date: February 19, 2026

@@ -1,0 +1,23 @@
+[SYNTHETIC DEMO FILE — all values are fictional]
+
+Riverpoint Community Bank
+Branch City: Columbus, Indiana
+
+Account Holder: Adrian Whitmore
+Mailing Address: 1847 Lantern Grove Ave, Indianapolis, IN 46204
+Account Number: 502771903418
+Statement Period: January 01, 2026 to January 31, 2026
+
+Transactions
+Date         | Description                  | Amount (USD)
+2026-01-03   | Oakline Market               | -64.28
+2026-01-05   | Metro Fuel Center            | -41.90
+2026-01-08   | Summit Utility Services      | -123.44
+2026-01-12   | Blue Harbor Payroll Deposit  | +2,480.00
+2026-01-18   | Northstar Pharmacy           | -27.65
+2026-01-23   | Pinecrest Home Supply        | -89.12
+2026-01-29   | Lakefront Cafe               | -16.73
+
+Closing Balance: $6,912.54
+Customer Service Phone: 800-555-2240
+Customer Service Email: support@riverpointbank.com
