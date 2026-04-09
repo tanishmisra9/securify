@@ -19,6 +19,7 @@ def run_training(
     dev_path: Path,
     output_dir: Path,
     gpu_id: int,
+    max_steps: int,
     auto_init_config: bool,
     dry_run: bool,
 ) -> None:
@@ -53,6 +54,8 @@ def run_training(
         str(train_path),
         "--paths.dev",
         str(dev_path),
+        "--training.max_steps",
+        str(max_steps),
     ]
 
     if gpu_id >= 0:
@@ -75,6 +78,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--dev", type=Path, default=DEFAULT_DEV)
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
     parser.add_argument("--gpu-id", type=int, default=-1, help="GPU index; set -1 for CPU")
+    parser.add_argument("--max-steps", type=int, default=5000)
     parser.add_argument(
         "--auto-init-config",
         action=argparse.BooleanOptionalAction,
@@ -93,6 +97,7 @@ if __name__ == "__main__":
         dev_path=args.dev,
         output_dir=args.output,
         gpu_id=args.gpu_id,
+        max_steps=args.max_steps,
         auto_init_config=args.auto_init_config,
         dry_run=args.dry_run,
     )

@@ -27,6 +27,8 @@ STRUCTURED_PATTERNS: list[tuple[str, str]] = [
 ]
 
 
+# NOTE: models/pii_ner/model-best is trained with roberta-base via training/config.cfg.
+# Do not substitute it with en_core_web_trf at inference because tokenizer behavior differs.
 @lru_cache(maxsize=1)
 def get_nlp() -> spacy.language.Language:
     candidates = [
