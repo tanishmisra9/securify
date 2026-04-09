@@ -15,6 +15,7 @@ class RedactionResult:
     redacted_text: str
     entity_map: dict[str, str] = field(default_factory=dict)
     entity_counts: dict[str, int] = field(default_factory=dict)
+    entity_confidences: dict[str, float] = field(default_factory=dict)
 
 
 STRUCTURED_PATTERNS: list[tuple[str, str]] = [
@@ -51,18 +52,26 @@ def redact(text: str) -> RedactionResult:
     nlp = get_nlp()
     doc = nlp(text)
 
-    ents = _merge_entities(doc)
+    spacy_entities = list(doc.ents)
+    regex_entities = _collect_regex_entities(doc)
+    all_spans_with_conf = _merge_spans_with_confidence(spacy_entities, regex_entities)
 
     replacements: list[tuple[int, int, str, str, str]] = []
     entity_counts: dict[str, int] = {}
     entity_map: dict[str, str] = {}
+    label_scores: dict[str, list[float]] = {}
 
-    for ent in sorted(ents, key=lambda e: e.start_char):
-        label = ent.label_
+    for span, conf in sorted(all_spans_with_conf, key=lambda item: item[0].start_char):
+        label = span.label_
         entity_counts[label] = entity_counts.get(label, 0) + 1
         placeholder = f"[{label}_{entity_counts[label]}]"
-        replacements.append((ent.start_char, ent.end_char, placeholder, ent.text, label))
-        entity_map[placeholder] = ent.text
+        replacements.append((span.start_char, span.end_char, placeholder, span.text, label))
+        entity_map[placeholder] = span.text
+        label_scores.setdefault(label, []).append(conf)
+
+    entity_confidences = {
+        label: round(sum(scores) / len(scores), 2) for label, scores in label_scores.items()
+    }
 
     redacted_text = text
     for start, end, placeholder, _, _ in sorted(replacements, key=lambda x: x[0], reverse=True):
@@ -73,16 +82,38 @@ def redact(text: str) -> RedactionResult:
         redacted_text=redacted_text,
         entity_map=entity_map,
         entity_counts=entity_counts,
+        entity_confidences=entity_confidences,
     )
 
 
-def _merge_entities(doc) -> list[Span]:
-    entities = list(doc.ents)
-
+def _collect_regex_entities(doc) -> list[Span]:
+    entities: list[Span] = []
     for pattern, label in STRUCTURED_PATTERNS:
         for match in re.finditer(pattern, doc.text):
             span = doc.char_span(match.start(), match.end(), label=label, alignment_mode="expand")
             if span is not None:
                 entities.append(span)
+    return entities
 
-    return spacy.util.filter_spans(entities)
+
+def _merge_spans_with_confidence(
+    spacy_entities: list[Span], regex_entities: list[Span]
+) -> list[tuple[Span, float]]:
+    all_entities = spacy_entities + regex_entities
+    filtered = spacy.util.filter_spans(all_entities)
+
+    conf_by_key: dict[tuple[int, int, str], float] = {}
+    for span in spacy_entities:
+        key = (span.start_char, span.end_char, span.label_)
+        conf_by_key[key] = max(conf_by_key.get(key, 0.0), 0.9)
+
+    for span in regex_entities:
+        key = (span.start_char, span.end_char, span.label_)
+        conf_by_key[key] = max(conf_by_key.get(key, 0.0), 1.0)
+
+    output: list[tuple[Span, float]] = []
+    for span in filtered:
+        key = (span.start_char, span.end_char, span.label_)
+        output.append((span, conf_by_key.get(key, 0.9)))
+
+    return output

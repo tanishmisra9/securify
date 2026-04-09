@@ -206,7 +206,8 @@ with upload_tab:
 
             metric_cols = st.columns(min(len(result.entity_counts), 6))
             for idx, (label, count) in enumerate(sorted(result.entity_counts.items())):
-                metric_cols[idx % len(metric_cols)].metric(label, count, "redacted")
+                conf = result.entity_confidences.get(label, 0.0)
+                metric_cols[idx % len(metric_cols)].metric(label, count, f"{conf:.0%} conf")
         elif result:
             st.info("No PII entities were detected in this document.")
 
