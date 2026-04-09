@@ -15,6 +15,15 @@ INJECTION_PATTERNS = [
     r"jailbreak",
     r"act\s+as",
     r"pretend\s+(you are|to be)",
+    r"forget (everything|all|what)",
+    r"new (role|persona|instruction)",
+    r"(as|being) (a|an) (unrestricted|unfiltered|evil|different)",
+    r"\bDAN\b",
+    r"developer mode",
+    r"(show|print|output|display|repeat|echo).{0,30}(original|raw|unredacted|full)",
+    r"what (is|are|was|were).{0,20}\[.+\]",
+    r"who is \[",
+    r"translate.{0,20}placeholder",
 ]
 
 PII_LEAK_PATTERNS = [
