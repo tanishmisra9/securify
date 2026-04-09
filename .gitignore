@@ -1,0 +1,24 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+.env
+
+# Runtime artifacts
+/data/raw/*
+!/data/raw/.gitkeep
+/data/redacted/*
+!/data/redacted/.gitkeep
+/data/synthetic/*.spacy
+/data/synthetic/*.jsonl
+/models/pii_ner/
+/audit/audit.db
+
+# Streamlit
+.streamlit/

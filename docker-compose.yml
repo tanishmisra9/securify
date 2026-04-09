@@ -1,0 +1,13 @@
+version: "3.9"
+services:
+  app:
+    build: .
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./models:/app/models
+      - ./data:/app/data
+      - ./audit:/app/audit
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - SECURIFY_MODEL=${SECURIFY_MODEL:-gpt-4o-mini}
