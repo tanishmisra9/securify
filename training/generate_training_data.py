@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import random
+import re
 import string
 from collections import Counter
 from pathlib import Path
@@ -21,6 +22,12 @@ TEMPLATES = [
     "{name}'s SSN is {ssn}. They can be contacted at {phone} or {email}.",
     "Dr. {provider_name} at {org} referred patient {name} (MRN: {mrn}) for follow-up on {date}.",
     "{name} from {city} visited {org} on {date}; phone {phone}; diagnosis: {diagnosis}.",
+    "Patient {name} was evaluated by Dr. {provider_name} at {org} on {date} for {diagnosis}.",
+    "PII record for {name}: SSN {ssn}, phone {phone}, and email {email} were verified on {date}.",
+    "At {org} in {city}, {name} holds account {account} with a reported balance of $14,392.27 as of {date}.",
+    "{name} signed the intake form at {org} on {date} before orientation.",
+    "{name} reported persistent {diagnosis} symptoms before transfer to {org} on {date}.",
+    "This clause is between {name} and {provider_name}, effective {date}, under the laws of {city}.",
 ]
 
 DIAGNOSES = [
@@ -69,12 +76,17 @@ def generate_record(template: str) -> tuple[str, list[tuple[int, int, str]]]:
     entities: list[tuple[int, int, str]] = []
     for field, label in FIELD_LABELS.items():
         value = values[field]
-        start = text.find(value)
-        if start >= 0:
-            entities.append((start, start + len(value), label))
+        entities.extend(_find_all_occurrences(text, value, label))
 
     entities = _dedupe_spans(entities)
     return text, entities
+
+
+def _find_all_occurrences(text: str, value: str, label: str) -> list[tuple[int, int, str]]:
+    spans: list[tuple[int, int, str]] = []
+    for match in re.finditer(re.escape(value), text):
+        spans.append((match.start(), match.end(), label))
+    return spans
 
 
 def write_docbin(examples: list[tuple[str, list[tuple[int, int, str]]]], output: Path) -> None:
