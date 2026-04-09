@@ -1,6 +1,9 @@
 from __future__ import annotations
 
+from functools import lru_cache
 import re
+
+from sentence_transformers import SentenceTransformer, util
 
 from agents.graph import AgentState
 
@@ -52,33 +55,22 @@ def retrieve_chunks(state: AgentState, top_k: int = 4) -> AgentState:
             "context_chunks": [],
         }
 
-    query_tokens = _tokenize(query)
-    if not query_tokens:
-        return {
-            **state,
-            "context_chunks": chunks[:top_k],
-        }
-
-    scored: list[tuple[float, str]] = []
-    for chunk in chunks:
-        chunk_tokens = _tokenize(chunk)
-        if not chunk_tokens:
-            continue
-        overlap = len(query_tokens.intersection(chunk_tokens))
-        union = len(query_tokens.union(chunk_tokens)) or 1
-        score = overlap / union
-        if score > 0:
-            scored.append((score, chunk))
-
-    if not scored:
-        selected = chunks[:top_k]
-    else:
-        selected = [chunk for _, chunk in sorted(scored, key=lambda x: x[0], reverse=True)[:top_k]]
+    model = _get_model()
+    vecs = model.encode([query] + chunks, convert_to_tensor=True)
+    query_vec, chunk_vecs = vecs[0], vecs[1:]
+    scores = util.cos_sim(query_vec, chunk_vecs)[0]
+    top_indices = scores.topk(min(top_k, len(chunks))).indices.tolist()
+    selected = [chunks[i] for i in sorted(top_indices)]
 
     return {
         **state,
         "context_chunks": selected,
     }
+
+
+@lru_cache(maxsize=1)
+def _get_model() -> SentenceTransformer:
+    return SentenceTransformer("all-MiniLM-L6-v2")
 
 
 def _tokenize(text: str) -> set[str]:

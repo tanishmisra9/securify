@@ -10,3 +10,4 @@ faker>=24.0
 pandas>=2.0
 scikit-learn>=1.4
 torch>=2.2
+sentence-transformers>=2.7
