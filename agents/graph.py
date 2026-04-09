@@ -10,6 +10,7 @@ class AgentState(TypedDict):
     route: Literal["qa", "security_review"]
     redacted_chunks: list[str]
     context_chunks: list[str]
+    entity_map: dict[str, str]
     answer: str
     injection_detected: bool
     pii_leak_detected: bool

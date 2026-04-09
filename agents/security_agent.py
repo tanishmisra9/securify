@@ -23,18 +23,20 @@ PII_LEAK_PATTERNS = [
     r"\b\d{10,16}\b",  # likely account number
     r"\b(?:MRN|mrn)[:-]?\s?\d{6,10}\b",  # MRN
     r"\b(?:\+1[-.\s]?)?(?:\(?\d{3}\)?[-.\s]?)\d{3}[-.\s]?\d{4}\b",  # Phone
-    r"\b[A-Z][a-z]+\s+[A-Z][a-z]+\b",  # full-name heuristic
 ]
 
 
 def run_security_check(state: AgentState) -> AgentState:
     query = state["query"]
     answer = state["answer"]
+    entity_map = state.get("entity_map", {})
 
     injection_detected = any(
         re.search(pattern, query, flags=re.IGNORECASE) for pattern in INJECTION_PATTERNS
     )
-    pii_leak_detected = any(re.search(pattern, answer) for pattern in PII_LEAK_PATTERNS)
+    regex_leak = any(re.search(pattern, answer) for pattern in PII_LEAK_PATTERNS)
+    map_leak = any(v in answer for v in entity_map.values() if len(v) > 4)
+    pii_leak_detected = regex_leak or map_leak
 
     if injection_detected:
         verdict = "BLOCKED: Prompt injection detected in query."

@@ -31,6 +31,7 @@ def init_session_state() -> None:
         "graph": get_graph(),
         "doc_name": None,
         "redaction_result": None,
+        "entity_map": {},
         "chunks": [],
         "processed_signature": None,
         "last_answer": None,
@@ -217,6 +218,7 @@ with query_tab:
         submit = st.button("Submit", type="primary")
 
         if submit and query.strip():
+            redaction_result: RedactionResult = st.session_state["redaction_result"]
             with st.spinner("Thinking..."):
                 result_state = st.session_state["graph"].invoke(
                     {
@@ -224,6 +226,7 @@ with query_tab:
                         "route": "qa",
                         "redacted_chunks": st.session_state["chunks"],
                         "context_chunks": [],
+                        "entity_map": redaction_result.entity_map,
                         "answer": "",
                         "injection_detected": False,
                         "pii_leak_detected": False,
@@ -242,7 +245,6 @@ with query_tab:
             st.session_state["last_answer"] = answer
             st.session_state["last_verdict"] = verdict
 
-            redaction_result: RedactionResult = st.session_state["redaction_result"]
             log_query(
                 query=query,
                 entity_types_seen=list(redaction_result.entity_counts.keys()),
