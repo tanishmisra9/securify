@@ -1,0 +1,156 @@
+[SYNTHETIC DEMO FILE — all values are fictional]
+
+================================================================================
+MERIDIAN BANK & TRUST
+Personal Banking Division
+One Financial Plaza, Chicago, IL 60601
+Customer Service: 1-800-637-4291 | banking@meridianbt.com
+================================================================================
+
+PERSONAL ACCOUNT STATEMENT
+Statement Period: February 1, 2025 — February 28, 2025
+
+--------------------------------------------------------------------------------
+ACCOUNT HOLDER INFORMATION
+--------------------------------------------------------------------------------
+Account Holder:       Daniel P. Ostrowski
+Co-Account Holder:    Christine M. Ostrowski
+Mailing Address:      882 Birchwood Court, Naperville, IL 60540
+Primary Phone:        (630) 774-5512
+Email Address:        daniel.ostrowski@gmail.com
+SSN (Primary):        391-58-7724
+SSN (Co-Holder):      412-67-3309
+Customer Since:       March 14, 2008
+
+--------------------------------------------------------------------------------
+ACCOUNT SUMMARY
+--------------------------------------------------------------------------------
+Account Type:         Premier Checking
+Account Number:       740029183654
+Routing Number:       071000288
+Branch:               Naperville — Ogden Avenue Branch
+
+Previous Balance (January 31, 2025):           $12,847.33
+Total Deposits & Credits:                      $14,220.00
+Total Withdrawals & Debits:                    $13,104.67
+Service Fees:                                      $12.00
+Closing Balance (February 28, 2025):           $13,950.66
+
+--------------------------------------------------------------------------------
+SAVINGS ACCOUNT SUMMARY
+--------------------------------------------------------------------------------
+Account Type:         High-Yield Savings
+Account Number:       740029183721
+APY:                  4.75%
+Opening Balance (February 1, 2025):            $31,440.00
+Interest Earned:                                  $124.87
+Closing Balance (February 28, 2025):           $31,564.87
+
+--------------------------------------------------------------------------------
+TRANSACTION DETAIL — PREMIER CHECKING (740029183654)
+--------------------------------------------------------------------------------
+
+DATE         DESCRIPTION                              DEPOSITS      WITHDRAWALS
+----------   ---------------------------------------  -----------   -----------
+02/01/2025   Opening Balance                                         $12,847.33
+02/03/2025   Direct Deposit — Hartwell Solutions       $6,800.00
+             (Payroll — Daniel P. Ostrowski)
+02/03/2025   ACH Transfer — Savings Account                          $1,000.00
+             (Auto-transfer to acct 740029183721)
+02/04/2025   VISA Purchase — Whole Foods Market                        $143.22
+02/04/2025   VISA Purchase — Shell Station #4471                        $67.80
+02/05/2025   Mortgage Payment — FirstLink Mortgage                   $2,104.00
+             (Loan #FLM-8847291, 882 Birchwood Ct)
+02/05/2025   VISA Purchase — Walgreens Pharmacy                         $34.50
+02/06/2025   Zelle Transfer — To: Kevin Ostrowski                      $250.00
+             (Memo: Birthday gift)
+02/07/2025   ATM Withdrawal — Chase ATM Downers                        $200.00
+             Grove (Out-of-network fee: $3.00)
+02/10/2025   Direct Deposit — Hartwell Solutions       $6,800.00
+             (Payroll — Daniel P. Ostrowski)
+02/10/2025   ACH Payment — ComEd Electric                              $189.44
+02/10/2025   ACH Payment — Nicor Gas                                   $211.33
+02/11/2025   VISA Purchase — Costco Wholesale                          $387.19
+02/12/2025   VISA Purchase — Target Store #0419                        $129.88
+02/13/2025   ACH Payment — Nationwide Insurance                        $342.00
+             (Auto Policy — 2022 Honda Accord)
+02/14/2025   VISA Purchase — Rosebud Restaurant                        $178.55
+02/14/2025   VISA Purchase — AMC Theatres                               $42.00
+02/17/2025   Presidents Day — Bank Holiday
+02/18/2025   VISA Purchase — Amazon.com                                $219.99
+02/19/2025   ACH Payment — Illinois Tollway                             $40.00
+02/19/2025   VISA Purchase — Mariano's Grocery                         $211.47
+02/20/2025   Direct Deposit — Part-time — Westlake      $620.00
+             Tutoring Services (Christine M. Ostrowski)
+02/21/2025   VISA Purchase — BP Gas Station #2291                       $71.22
+02/21/2025   Zelle Transfer — To: Margaret Kowalski                    $500.00
+             (Memo: Rent share Feb)
+02/22/2025   ATM Withdrawal — Meridian ATM Naperville                  $300.00
+02/24/2025   VISA Purchase — Best Buy Store #349                       $449.00
+02/25/2025   ACH Payment — Navient Student Loans                       $387.00
+             (Loan Acct: NV-4492017-IL)
+02/25/2025   VISA Purchase — Trader Joe's                              $156.38
+02/26/2025   ACH Payment — Xfinity Internet/Cable                     $152.00
+02/27/2025   VISA Purchase — TJ Maxx                                    $88.44
+02/28/2025   Monthly Service Fee                                        $12.00
+02/28/2025   Interest Credit — Savings (auto-posted)      $124.87
+02/28/2025   Closing Balance                                         $13,950.66
+
+--------------------------------------------------------------------------------
+CREDIT CARD SUMMARY — MERIDIAN PREMIER VISA
+--------------------------------------------------------------------------------
+Card Number (last 4):    ...7741
+Primary Cardholder:      Daniel P. Ostrowski
+Additional Cardholder:   Christine M. Ostrowski (card ending ...3892)
+Credit Limit:            $18,000.00
+Statement Balance:       $3,841.19
+Minimum Payment Due:     $96.00
+Payment Due Date:        March 18, 2025
+Rewards Points Earned:   3,841 pts (this period)
+Rewards Points Balance:  47,392 pts
+
+--------------------------------------------------------------------------------
+LOAN SUMMARY — HOME EQUITY LINE OF CREDIT
+--------------------------------------------------------------------------------
+HELOC Account:           740029184001
+Property Address:        882 Birchwood Court, Naperville, IL 60540
+Credit Limit:            $75,000.00
+Outstanding Balance:     $14,200.00
+Available Credit:        $60,800.00
+Interest Rate:           Prime + 0.50% (current: 8.00% APR)
+Minimum Monthly Payment: $94.67 (interest only)
+Next Payment Due:        March 15, 2025
+
+--------------------------------------------------------------------------------
+IMPORTANT NOTICES
+--------------------------------------------------------------------------------
+FRAUD ALERT REMINDER: Meridian Bank & Trust will never call, text, or email
+asking for your full account number, SSN, or online banking password. If you
+receive a suspicious request, call our fraud line immediately: 1-800-637-4299.
+
+TAX INFORMATION: Your 2024 year-end tax documents (1099-INT) are available
+in your online banking portal. Total interest earned in 2024: $1,842.33.
+For tax questions, contact your financial advisor or call customer service.
+
+RATE CHANGE NOTICE: Effective March 1, 2025, the APY on your High-Yield
+Savings account will adjust to 4.60% in response to Federal Reserve
+benchmark rate changes. Your account terms and conditions remain unchanged.
+
+--------------------------------------------------------------------------------
+CONTACT & ACCOUNT SERVICES
+--------------------------------------------------------------------------------
+Customer Service:     1-800-637-4291 (24/7)
+Online Banking:       www.meridianbt.com
+Mobile App:           Available on iOS and Android
+Branch Address:       1200 Ogden Avenue, Naperville, IL 60540
+Branch Phone:         (630) 948-3300
+Branch Manager:       Patricia Sundaram
+
+Fraud & Security:     1-800-637-4299 (24/7)
+Hearing Impaired:     TTY/TDD 1-800-637-4298
+
+================================================================================
+MERIDIAN BANK & TRUST — MEMBER FDIC | EQUAL HOUSING LENDER
+Statement generated: March 1, 2025
+This statement is confidential and intended solely for the named account holder.
+================================================================================

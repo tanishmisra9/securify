@@ -1,0 +1,213 @@
+[SYNTHETIC DEMO FILE — all values are fictional]
+
+================================================================================
+NORTHRIDGE MEMORIAL HOSPITAL
+Department of Internal Medicine & Cardiology
+2801 Lakeview Medical Drive, Austin, TX 78701
+Phone: (512) 904-7700 | Fax: (512) 904-7799
+================================================================================
+
+PATIENT DISCHARGE SUMMARY
+
+--------------------------------------------------------------------------------
+PATIENT INFORMATION
+--------------------------------------------------------------------------------
+Patient Name:         Margaret A. Holloway
+Date of Birth:        September 14, 1961
+Age:                  63
+Sex:                  Female
+MRN:                  MRN-448821
+SSN:                  527-39-6014
+Home Address:         4417 Rosewood Lane, Cedar Park, TX 78613
+Primary Phone:        (512) 334-9201
+Emergency Contact:    Robert Holloway (Spouse), (512) 334-9202
+Insurance Provider:   BlueCross BlueShield of Texas
+Policy Number:        BCB-9948821-TX
+Group Number:         GRP-44029
+
+--------------------------------------------------------------------------------
+ADMISSION DETAILS
+--------------------------------------------------------------------------------
+Admission Date:       March 3, 2025
+Discharge Date:       March 9, 2025
+Length of Stay:       6 days
+Admitting Physician:  Dr. Samuel R. Okafor, MD (Cardiology)
+Attending Physician:  Dr. Priya Nandakumar, MD (Internal Medicine)
+Consulting Physician: Dr. James Whitfield, MD (Nephrology)
+Unit:                 4B — Cardiac Stepdown
+Room:                 412
+
+--------------------------------------------------------------------------------
+REASON FOR ADMISSION
+--------------------------------------------------------------------------------
+Mrs. Holloway presented to the Northridge Memorial Emergency Department on
+March 3, 2025 via ambulance following a witnessed syncopal episode at her
+residence. Her husband, Robert Holloway, reported she lost consciousness for
+approximately 45 seconds while seated in the living room. Upon arrival, the
+patient was alert and oriented x3 but reported significant chest tightness,
+shortness of breath, and intermittent palpitations over the preceding 72 hours.
+Initial EKG demonstrated new-onset atrial fibrillation with rapid ventricular
+response (HR 138 bpm). She was admitted for rate control, anticoagulation
+initiation, and workup of underlying cardiac etiology.
+
+--------------------------------------------------------------------------------
+PAST MEDICAL HISTORY
+--------------------------------------------------------------------------------
+1. Hypertension (diagnosed 2011, managed with Lisinopril 10mg daily)
+2. Type 2 Diabetes Mellitus (diagnosed 2015, managed with Metformin 1000mg BID)
+3. Hyperlipidemia (managed with Atorvastatin 40mg nightly)
+4. Mild Chronic Kidney Disease, Stage 2 (creatinine baseline 1.3 mg/dL, 2023)
+5. Osteoarthritis, bilateral knees (managed conservatively)
+6. Appendectomy (1994, uncomplicated)
+
+--------------------------------------------------------------------------------
+MEDICATIONS ON ADMISSION
+--------------------------------------------------------------------------------
+- Lisinopril 10mg oral daily
+- Metformin 1000mg oral twice daily
+- Atorvastatin 40mg oral nightly
+- Aspirin 81mg oral daily
+- Calcium + Vitamin D supplement oral daily
+
+--------------------------------------------------------------------------------
+ALLERGIES
+--------------------------------------------------------------------------------
+- Penicillin (rash, documented 1998)
+- Sulfonamides (urticaria, documented 2007)
+- Contrast dye (mild reaction, documented 2019 — premedicate if needed)
+
+--------------------------------------------------------------------------------
+HOSPITAL COURSE
+--------------------------------------------------------------------------------
+On admission, cardiology was consulted and rate control was initiated with
+intravenous Metoprolol 5mg, repeated x2, achieving adequate rate response
+(HR 88 bpm) within 4 hours. Given the new-onset atrial fibrillation, the
+decision was made to initiate anticoagulation with Apixaban 5mg BID after
+confirming CHA2DS2-VASc score of 4. Electrical cardioversion was considered
+but deferred pending TEE to rule out left atrial thrombus.
+
+On March 4, 2025, transesophageal echocardiography (TEE) performed by
+Dr. Okafor demonstrated no evidence of intracardiac thrombus. Left atrial
+enlargement was noted (LA diameter 4.6 cm). Ejection fraction estimated at
+52%. Mild mitral regurgitation was identified. No significant wall motion
+abnormalities. Electrical cardioversion was performed on March 5, 2025 under
+conscious sedation with Midazolam and Fentanyl. Normal sinus rhythm was
+restored at 200J biphasic shock. Post-cardioversion EKG confirmed sinus
+rhythm at 72 bpm.
+
+Nephrology was consulted on March 5, 2025 by Dr. James Whitfield given
+baseline CKD and concern for contrast nephropathy following CT angiography
+performed on admission (creatinine rose from 1.3 to 1.7 mg/dL post-contrast).
+Aggressive IV hydration was initiated. Repeat creatinine on March 7, 2025
+improved to 1.4 mg/dL. Metformin was held during hospitalization and renal
+function will be reassessed prior to restart.
+
+The patient remained hemodynamically stable throughout her hospital course.
+Telemetry monitoring demonstrated maintenance of normal sinus rhythm without
+recurrence of atrial fibrillation. No further syncopal or near-syncopal
+episodes were recorded.
+
+--------------------------------------------------------------------------------
+LABORATORY RESULTS (SELECTED)
+--------------------------------------------------------------------------------
+Admission (March 3, 2025):
+  WBC:          8.4 x10³/µL     (normal)
+  Hemoglobin:   11.9 g/dL       (low — mild anemia noted)
+  Platelets:    221 x10³/µL     (normal)
+  BMP — Na:     138 mEq/L, K: 4.1, Cl: 102, CO2: 24
+  Creatinine:   1.3 mg/dL
+  eGFR:         51 mL/min/1.73m²
+  BNP:          312 pg/mL       (elevated)
+  TSH:          2.4 mIU/L       (normal)
+  HbA1c:        7.8%            (suboptimal glycemic control)
+  INR:          1.1
+
+Discharge (March 9, 2025):
+  Creatinine:   1.4 mg/dL
+  eGFR:         49 mL/min/1.73m²
+  BNP:          89 pg/mL        (improving)
+  Hemoglobin:   12.1 g/dL
+
+--------------------------------------------------------------------------------
+DIAGNOSES
+--------------------------------------------------------------------------------
+PRIMARY:
+  1. New-Onset Atrial Fibrillation with Rapid Ventricular Response
+  2. Syncopal Episode secondary to Atrial Fibrillation
+
+SECONDARY:
+  3. Contrast-Induced Nephropathy (resolving)
+  4. Mild Mitral Regurgitation (new finding)
+  5. Suboptimal Glycemic Control (HbA1c 7.8%)
+  6. Mild Normocytic Anemia (under investigation)
+
+--------------------------------------------------------------------------------
+DISCHARGE MEDICATIONS
+--------------------------------------------------------------------------------
+NEW MEDICATIONS:
+  - Apixaban (Eliquis) 5mg oral twice daily — anticoagulation for AFib
+  - Metoprolol Succinate 50mg oral daily — rate control
+  - Diltiazem 120mg extended-release oral daily — rhythm support
+
+CONTINUED:
+  - Lisinopril 10mg oral daily
+  - Atorvastatin 40mg oral nightly
+  - Aspirin 81mg oral daily (continue unless directed otherwise by cardiology)
+  - Calcium + Vitamin D supplement oral daily
+
+HELD PENDING FOLLOW-UP:
+  - Metformin 1000mg — HOLD until renal function reassessed at follow-up visit
+
+--------------------------------------------------------------------------------
+DISCHARGE INSTRUCTIONS
+--------------------------------------------------------------------------------
+Mrs. Holloway was discharged in stable condition on March 9, 2025 in the care
+of her husband, Robert Holloway. She was ambulatory and tolerating a regular
+cardiac diet. The patient and her family were educated on the diagnosis of
+atrial fibrillation, the importance of anticoagulation compliance, signs of
+bleeding, and when to seek emergency care.
+
+She was instructed to avoid over-the-counter NSAIDs (ibuprofen, naproxen)
+while on Apixaban. She was advised to monitor for signs of bleeding including
+unusual bruising, blood in urine or stool, or prolonged bleeding from cuts.
+She was counseled on dietary consistency and to avoid significant changes in
+vitamin K intake. She was instructed not to restart Metformin until cleared
+by her primary care physician following repeat renal labs.
+
+Activity restrictions: No strenuous activity for 2 weeks. Resume light walking
+as tolerated. No driving for 1 week or until cleared by cardiology.
+
+--------------------------------------------------------------------------------
+FOLLOW-UP PLAN
+--------------------------------------------------------------------------------
+1. Cardiology (Dr. Samuel R. Okafor):
+   Date: March 19, 2025 at 9:30 AM
+   Location: Northridge Cardiology Associates, Suite 210
+   Purpose: Post-cardioversion follow-up, Holter monitor review, repeat EKG
+
+2. Primary Care (Dr. Linda Ferreira, MD):
+   Date: March 24, 2025 at 11:00 AM
+   Location: Cedar Park Family Medicine, 3901 Cypress Creek Rd
+   Purpose: Repeat BMP, assess Metformin restart, anemia workup referral
+
+3. Nephrology (Dr. James Whitfield):
+   Date: April 7, 2025 at 2:00 PM
+   Location: Austin Kidney Specialists, 5500 N Lamar Blvd, Suite 140
+   Purpose: CKD monitoring, post-contrast nephropathy follow-up
+
+--------------------------------------------------------------------------------
+ELECTRONICALLY SIGNED
+--------------------------------------------------------------------------------
+Attending Physician:  Dr. Priya Nandakumar, MD
+Date:                 March 9, 2025 at 14:37
+NPI:                  1902847561
+
+Reviewed By:          Dr. Samuel R. Okafor, MD (Cardiology)
+Date:                 March 9, 2025 at 15:02
+NPI:                  1748302956
+
+================================================================================
+NORTHRIDGE MEMORIAL HOSPITAL — CONFIDENTIAL MEDICAL RECORD
+This document contains protected health information (PHI). Unauthorized
+disclosure is prohibited under HIPAA 45 CFR Parts 160 and 164.
+================================================================================

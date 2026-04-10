@@ -1,0 +1,237 @@
+[SYNTHETIC DEMO FILE — all values are fictional]
+
+================================================================================
+EMPLOYMENT AGREEMENT AND NON-DISCLOSURE AGREEMENT
+
+Hartwell Solutions, Inc.
+================================================================================
+
+This Employment Agreement and Non-Disclosure Agreement ("Agreement") is entered
+into as of January 6, 2025 ("Effective Date") by and between:
+
+EMPLOYER:
+  Hartwell Solutions, Inc.
+  A Delaware Corporation
+  Principal Office: 330 N. Wabash Avenue, Suite 1800, Chicago, IL 60611
+  EIN: 47-2291048
+  Represented by: Victoria L. Harmon, Chief People Officer
+
+EMPLOYEE:
+  Full Name:        Daniel P. Ostrowski
+  Home Address:     882 Birchwood Court, Naperville, IL 60540
+  Date of Birth:    April 22, 1984
+  SSN:              391-58-7724
+  Personal Email:   daniel.ostrowski@gmail.com
+  Mobile Phone:     (630) 774-5512
+  Emergency Contact: Christine M. Ostrowski (Spouse), (630) 774-5513
+
+Collectively referred to as "the Parties."
+
+================================================================================
+ARTICLE I — POSITION AND DUTIES
+================================================================================
+
+1.1 POSITION
+Employer hereby employs Employee in the position of Senior Data Engineer,
+reporting directly to Marcus T. Fenwick, Vice President of Engineering
+(marcus.fenwick@hartwellsolutions.com, extension 4421).
+
+1.2 DUTIES
+Employee shall be responsible for designing, building, and maintaining scalable
+data infrastructure including ETL pipelines, data warehouse architecture,
+and real-time streaming systems. Employee shall also provide technical
+mentorship to junior engineers and collaborate with the product and analytics
+teams to deliver data solutions aligned with business objectives. A complete
+job description is attached as Exhibit A.
+
+1.3 START DATE
+Employee's first day of employment shall be January 13, 2025.
+
+1.4 WORK LOCATION
+Employee's primary work location is Hartwell Solutions headquarters at
+330 N. Wabash Avenue, Suite 1800, Chicago, IL 60611. A hybrid schedule of
+three days in-office and two days remote is authorized per company policy.
+Employee must be present in-office every Tuesday and Thursday at minimum.
+
+================================================================================
+ARTICLE II — COMPENSATION AND BENEFITS
+================================================================================
+
+2.1 BASE SALARY
+Employer shall pay Employee an annual base salary of $136,000.00 (One Hundred
+Thirty-Six Thousand Dollars), payable in bi-weekly installments of $5,230.77
+via direct deposit to the account designated by Employee. Salary is subject
+to applicable federal, state, and local tax withholdings.
+
+2.2 SIGNING BONUS
+Employee shall receive a one-time signing bonus of $8,000.00 (Eight Thousand
+Dollars), payable on the first regular payroll date following the Start Date,
+subject to applicable withholdings. In the event Employee voluntarily resigns
+within 12 months of the Start Date, Employee agrees to repay the full signing
+bonus within 30 days of separation.
+
+2.3 PERFORMANCE BONUS
+Employee is eligible for an annual performance bonus of up to 15% of base
+salary ($20,400.00), contingent upon individual and company performance metrics
+as determined by management. Bonus eligibility requires active employment on
+the bonus payment date (typically March 15 of the following calendar year).
+
+2.4 EQUITY
+Employee shall be granted 2,500 Restricted Stock Units (RSUs) in Hartwell
+Solutions, Inc., subject to a 4-year vesting schedule with a 1-year cliff
+(25% vesting on January 13, 2026, with the remainder vesting quarterly
+thereafter). RSU terms are governed by the Hartwell Solutions 2022 Equity
+Incentive Plan.
+
+2.5 BENEFITS
+Employee is eligible for the following benefits, subject to applicable plan
+terms and eligibility requirements:
+  - Medical Insurance: BlueCross BlueShield PPO (Employee + Family)
+    (Employer covers 85% of premium; Employee contribution: $312.00/month)
+  - Dental Insurance: MetLife Dental Plus
+  - Vision Insurance: VSP Standard Plan
+  - 401(k) Retirement Plan: Employer match up to 4% of base salary
+    (vesting: immediate for employee contributions, 3-year graded for match)
+  - Life Insurance: 2x annual salary ($272,000.00 coverage)
+  - Short-Term and Long-Term Disability Insurance
+  - Paid Time Off: 20 days per year, accruing at 1.67 days/month
+  - 12 Company Holidays per calendar year
+  - $2,000.00 annual professional development stipend
+  - $100.00/month remote work stipend
+
+================================================================================
+ARTICLE III — INTELLECTUAL PROPERTY
+================================================================================
+
+3.1 WORK PRODUCT OWNERSHIP
+All work product, inventions, developments, improvements, software, code,
+data pipelines, and other intellectual property created by Employee in the
+scope of employment, or using Employer's resources, shall be the exclusive
+property of Hartwell Solutions, Inc. Employee hereby assigns all right, title,
+and interest in such work product to Employer.
+
+3.2 PRIOR INVENTIONS
+Employee represents that Exhibit B (attached) constitutes a complete list of
+all inventions, improvements, or developments conceived by Employee prior to
+employment that Employee wishes to exclude from this Agreement. Employee
+represents that Exhibit B is complete and accurate.
+
+================================================================================
+ARTICLE IV — NON-DISCLOSURE AGREEMENT
+================================================================================
+
+4.1 CONFIDENTIAL INFORMATION DEFINED
+"Confidential Information" includes but is not limited to: trade secrets,
+proprietary data, customer lists, pricing models, business strategies, source
+code, architectural documentation, financial projections, personnel records,
+and any other non-public information disclosed to Employee in the course of
+employment, whether oral, written, or electronic.
+
+4.2 OBLIGATIONS
+During employment and for a period of three (3) years thereafter, Employee
+shall: (a) hold all Confidential Information in strict confidence; (b) not
+disclose Confidential Information to any third party without Employer's prior
+written consent; (c) use Confidential Information solely for the benefit of
+Employer; and (d) immediately notify Employer upon discovery of any
+unauthorized disclosure.
+
+4.3 EXCLUSIONS
+Confidentiality obligations do not apply to information that: (a) is or
+becomes publicly known through no breach of this Agreement; (b) was rightfully
+known to Employee before disclosure; (c) is independently developed by Employee
+without use of Confidential Information; or (d) is required to be disclosed by
+law or court order, provided Employee gives Employer prompt written notice.
+
+================================================================================
+ARTICLE V — NON-COMPETE AND NON-SOLICITATION
+================================================================================
+
+5.1 NON-COMPETE
+For a period of twelve (12) months following termination of employment for any
+reason, Employee shall not, within the State of Illinois, directly or
+indirectly engage in, consult with, or be employed by any business entity that
+provides data engineering or analytics platform services in direct competition
+with Hartwell Solutions, Inc.'s primary business lines. This restriction is
+limited to businesses with annual revenues exceeding $5,000,000.
+
+5.2 NON-SOLICITATION OF EMPLOYEES
+For a period of twenty-four (24) months following termination, Employee shall
+not directly or indirectly solicit, recruit, or induce any Hartwell Solutions
+employee to terminate their employment with Employer.
+
+5.3 NON-SOLICITATION OF CLIENTS
+For a period of twelve (12) months following termination, Employee shall not
+solicit or attempt to divert any Hartwell Solutions client with whom Employee
+had material contact during the last eighteen (18) months of employment.
+
+================================================================================
+ARTICLE VI — TERMINATION
+================================================================================
+
+6.1 AT-WILL EMPLOYMENT
+Employment under this Agreement is at-will. Either party may terminate the
+employment relationship at any time, with or without cause or notice, subject
+to the provisions below.
+
+6.2 NOTICE
+Employee agrees to provide a minimum of two (2) weeks' written notice of
+voluntary resignation. Employer may, at its discretion, accept immediate
+resignation and pay in lieu of notice.
+
+6.3 SEVERANCE
+In the event of termination by Employer without cause after 12 months of
+continuous service, Employee shall be eligible for severance pay equal to
+four (4) weeks of base salary per year of completed service, up to a maximum
+of twenty-six (26) weeks, subject to execution of a separation agreement and
+general release.
+
+================================================================================
+ARTICLE VII — GENERAL PROVISIONS
+================================================================================
+
+7.1 GOVERNING LAW
+This Agreement shall be governed by and construed in accordance with the laws
+of the State of Illinois, without regard to conflict-of-law provisions.
+Any disputes shall be resolved by binding arbitration in Chicago, IL under
+the rules of the American Arbitration Association.
+
+7.2 ENTIRE AGREEMENT
+This Agreement, together with its Exhibits, constitutes the entire agreement
+between the Parties with respect to the subject matter hereof and supersedes
+all prior negotiations, representations, and agreements, whether written or oral.
+
+7.3 AMENDMENTS
+No amendment to this Agreement shall be valid unless made in writing and signed
+by both Parties.
+
+7.4 SEVERABILITY
+If any provision of this Agreement is found unenforceable, the remaining
+provisions shall remain in full force and effect.
+
+================================================================================
+SIGNATURES
+================================================================================
+
+EMPLOYEE:
+
+Signature: ______________________________
+Name:      Daniel P. Ostrowski
+Date:      January 6, 2025
+
+
+EMPLOYER — Hartwell Solutions, Inc.:
+
+Signature: ______________________________
+Name:      Victoria L. Harmon
+Title:     Chief People Officer
+Date:      January 6, 2025
+
+================================================================================
+EXHIBIT A — Job Description: Senior Data Engineer (attached separately)
+EXHIBIT B — Prior Inventions Disclosure (none listed by Employee)
+================================================================================
+
+Document Reference:  HSI-EMP-2025-0041
+Prepared by:         Hartwell Solutions Legal & HR
+Contact:             hr@hartwellsolutions.com | (312) 900-4400
+================================================================================
