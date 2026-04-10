@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import os
 import shlex
 import subprocess
 import sys
@@ -23,6 +24,8 @@ def run_training(
     auto_init_config: bool,
     dry_run: bool,
 ) -> None:
+    os.environ.setdefault("PYTORCH_ENABLE_MPS_FALLBACK", "1")
+
     if auto_init_config:
         init_cmd = [
             sys.executable,
@@ -56,6 +59,8 @@ def run_training(
         str(dev_path),
         "--training.max_steps",
         str(max_steps),
+        "--training.batch_size",
+        "256",
     ]
 
     if gpu_id >= 0:
@@ -68,7 +73,11 @@ def run_training(
         print("Dry run enabled, skipping execution.")
         return
 
-    subprocess.run(cmd, check=True)
+    import os as _os
+
+    env = _os.environ.copy()
+    env["PYTORCH_ENABLE_MPS_FALLBACK"] = "1"
+    subprocess.run(cmd, check=True, env=env)
 
 
 def parse_args() -> argparse.Namespace:
