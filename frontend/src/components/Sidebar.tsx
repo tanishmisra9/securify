@@ -1,7 +1,7 @@
 import { useCallback, useRef } from 'react';
 
 import { AnimatePresence, motion } from 'framer-motion';
-import { Activity, FileText, MessageSquare, Shield, Upload } from 'lucide-react';
+import { Activity, FileText, MessageSquare, RefreshCcw, Shield, Trash2, Upload } from 'lucide-react';
 
 import { useUpload } from '../hooks/useUpload';
 import { useAppStore } from '../store/useAppStore';
@@ -15,7 +15,7 @@ const NAV: Array<{ key: View; label: string; icon: typeof MessageSquare }> = [
 ];
 
 export default function Sidebar() {
-  const { doc, view, setView } = useAppStore();
+  const { doc, view, setView, clearDoc } = useAppStore();
   const { uploadFile, error, clearError } = useUpload();
   const fileRef = useRef<HTMLInputElement>(null);
 
@@ -33,29 +33,18 @@ export default function Sidebar() {
     [uploadFile]
   );
 
-  const onDrop = useCallback(
-    (e: React.DragEvent) => {
-      e.preventDefault();
-      const f = e.dataTransfer.files[0];
-      if (f) void handleFile(f);
-    },
-    [handleFile]
-  );
-
   return (
-    <aside
-      className="w-[260px] flex-shrink-0 bg-surface border-r border-border flex flex-col overflow-hidden"
-      onDragOver={(e) => e.preventDefault()}
-      onDrop={onDrop}
-    >
+    <aside className="w-[260px] flex-shrink-0 bg-surface border-r border-border flex flex-col overflow-hidden">
       <div className="px-4 py-5 border-b border-border flex-shrink-0">
-        <div className="flex items-center gap-3 mb-1">
+        <div className="flex items-center gap-3">
           <div className="w-8 h-8 rounded-[9px] bg-accent flex items-center justify-center shadow-lg shadow-accent/20 flex-shrink-0">
             <Shield size={15} className="text-white" strokeWidth={2.5} />
           </div>
-          <span className="font-semibold text-[1rem] tracking-tight text-t1">Securify</span>
+          <div className="flex flex-col justify-center leading-tight">
+            <span className="font-semibold text-[1rem] tracking-tight text-t1">Securify</span>
+            <p className="text-t3 text-[0.68rem] -mt-0.5">PII-safe document intelligence</p>
+          </div>
         </div>
-        <p className="text-t3 text-[0.68rem] pl-11">PII-safe document intelligence</p>
       </div>
 
       <div className="px-4 pt-4 pb-2 flex-shrink-0">
@@ -124,11 +113,8 @@ export default function Sidebar() {
       <div className="flex-1" />
 
       <div className="px-4 pb-5 flex-shrink-0">
-        <p className="section-label mb-2">Upload</p>
-        <div
-          className="relative border-[1.5px] border-dashed border-border2 rounded-[10px] p-4 text-center cursor-pointer group hover:border-accent transition-colors duration-150"
-          onClick={() => fileRef.current?.click()}
-        >
+        <p className="section-label mb-2">{doc ? 'Upload' : 'Getting Started'}</p>
+        <div className="space-y-2">
           <input
             ref={fileRef}
             type="file"
@@ -136,12 +122,30 @@ export default function Sidebar() {
             className="hidden"
             onChange={(e) => void handleFile(e.target.files?.[0] ?? null)}
           />
-          <Upload
-            size={18}
-            className="mx-auto mb-2 text-t3 group-hover:text-accent transition-colors"
-          />
-          <p className="text-t2 text-[0.75rem] group-hover:text-t1 transition-colors">Drop or click</p>
-          <p className="text-t3 text-[0.65rem] mt-1">PDF · DOCX · TXT</p>
+          <button
+            onClick={() => fileRef.current?.click()}
+            className="w-full flex items-center justify-center gap-2 rounded-[9px] border border-border2 bg-surface2 px-3 py-2 text-[0.78rem] text-t2 hover:text-t1 hover:border-accent transition-colors"
+          >
+            {doc ? <RefreshCcw size={13} /> : <Upload size={13} />}
+            {doc ? 'Change document' : 'Choose a document'}
+          </button>
+          {doc && (
+            <button
+              onClick={() => {
+                clearError();
+                clearDoc();
+              }}
+              className="w-full flex items-center justify-center gap-2 rounded-[9px] border border-border2 bg-surface2 px-3 py-2 text-[0.78rem] text-t3 hover:text-danger hover:border-danger/60 transition-colors"
+            >
+              <Trash2 size={13} />
+              Remove document
+            </button>
+          )}
+          {!doc && (
+            <p className="text-[0.68rem] text-t3 leading-relaxed">
+              Use the main upload area to drag and drop files.
+            </p>
+          )}
         </div>
         {error && (
           <div className="mt-2 text-[0.72rem] text-danger flex items-start justify-between gap-2">

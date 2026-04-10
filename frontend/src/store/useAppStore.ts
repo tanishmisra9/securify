@@ -22,8 +22,15 @@ export const useAppStore = create<AppStore>((set) => ({
   isLoading: false,
   loadingMessage: '',
 
-  setDoc: (doc) => set({ doc, chatHistory: [], view: 'chat' }),
-  clearDoc: () => set({ doc: null, chatHistory: [], view: 'chat' }),
+  setDoc: (doc) => set({ doc, chatHistory: [], view: 'redacted' }),
+  clearDoc: () =>
+    set({
+      doc: null,
+      chatHistory: [],
+      view: 'chat',
+      isLoading: false,
+      loadingMessage: '',
+    }),
   addMessage: (msg) => set((s) => ({ chatHistory: [...s.chatHistory, msg] })),
   setView: (view) => set({ view }),
   setLoading: (isLoading, loadingMessage = '') => set({ isLoading, loadingMessage }),

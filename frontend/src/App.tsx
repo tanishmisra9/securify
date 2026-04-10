@@ -16,26 +16,36 @@ const pageVariants = {
 export default function App() {
   const { doc, view } = useAppStore();
 
+  if (!doc) {
+    return (
+      <div className="flex h-screen overflow-hidden bg-bg">
+        <Sidebar />
+        <main className="flex-1 flex flex-col min-w-0 overflow-hidden">
+          <div className="flex-1 min-h-0 overflow-hidden">
+            <EmptyState />
+          </div>
+        </main>
+        <LoadingOverlay />
+      </div>
+    );
+  }
+
   return (
     <div className="flex h-screen overflow-hidden bg-bg">
       <Sidebar />
 
       <main className="flex-1 flex flex-col min-w-0 overflow-hidden">
-        <AnimatePresence mode="wait">
-          {!doc ? (
-            <motion.div key="empty" className="flex-1" {...pageVariants}>
-              <EmptyState />
-            </motion.div>
-          ) : view === 'chat' ? (
+        <AnimatePresence mode="sync" initial={false}>
+          {view === 'chat' ? (
             <motion.div key="chat" className="flex-1 flex flex-col min-h-0" {...pageVariants}>
               <ChatView />
             </motion.div>
           ) : view === 'redacted' ? (
-            <motion.div key="redacted" className="flex-1" {...pageVariants}>
+            <motion.div key="redacted" className="flex-1 min-h-0 overflow-hidden" {...pageVariants}>
               <RedactedView />
             </motion.div>
           ) : (
-            <motion.div key="audit" className="flex-1" {...pageVariants}>
+            <motion.div key="audit" className="flex-1 min-h-0 overflow-hidden" {...pageVariants}>
               <AuditView />
             </motion.div>
           )}
