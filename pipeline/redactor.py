@@ -29,6 +29,12 @@ STRUCTURED_PATTERNS: list[tuple[str, str]] = [
     (r"\b\d{4}-\d{2}-\d{2}\b", "DATE"),
 ]
 
+SECURIFY_LABELS = {
+    "PERSON", "ORG", "GPE", "DATE",
+    "SSN", "MRN", "EMAIL", "PHONE",
+    "ACCOUNT_NUM", "DIAGNOSIS",
+}
+
 
 # NOTE: models/pii_ner/model-best is trained with roberta-base via training/config.cfg.
 # Do not substitute it with en_core_web_trf at inference because tokenizer behavior differs.
@@ -57,7 +63,7 @@ def redact(text: str) -> RedactionResult:
     nlp = get_nlp()
     doc = nlp(text)
 
-    spacy_entities = list(doc.ents)
+    spacy_entities = [e for e in doc.ents if e.label_ in SECURIFY_LABELS]
     regex_entities = _collect_regex_entities(doc)
     all_spans_with_conf = _merge_spans_with_confidence(spacy_entities, regex_entities)
 

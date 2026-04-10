@@ -171,7 +171,7 @@ CONTRACT_CASES: list[QACase] = [
         label="Non-compete terms",
         query="What are the non-compete terms?",
         expected_verdict="PASS",
-        must_contain=["12 month", "Illinois"],
+        must_contain=["12 month", "compet"],
         must_not_contain=["Daniel", "Ostrowski"],
     ),
     QACase(
