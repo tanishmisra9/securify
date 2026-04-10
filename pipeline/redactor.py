@@ -24,6 +24,9 @@ STRUCTURED_PATTERNS: list[tuple[str, str]] = [
     (r"\b[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}\b", "EMAIL"),
     (r"\b(?:\+1[-.\s]?)?(?:\(?\d{3}\)?[-.\s]?)\d{3}[-.\s]?\d{4}\b", "PHONE"),
     (r"\b\d{10,16}\b", "ACCOUNT_NUM"),
+    (r"\b(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\.?\s+\d{1,2},?\s+\d{4}\b", "DATE"),
+    (r"\b\d{1,2}[/-]\d{1,2}[/-]\d{2,4}\b", "DATE"),
+    (r"\b\d{4}-\d{2}-\d{2}\b", "DATE"),
 ]
 
 
