@@ -1,0 +1,42 @@
+Loading model: models/pii_ner/model-best
+
+=== Regression Cases ===
+
+  Text: Patient John Doe (DOB: March 12, 1985) at Mayo Clinic.
+  Pred: [(8, 16, 'PERSON'), (23, 37, 'DATE'), (42, 53, 'ORG')]
+  Gold: [(8, 16, 'PERSON'), (23, 37, 'DATE'), (41, 52, 'ORG')]
+  MISSED: {(41, 52, 'ORG')}
+  EXTRA:  {(42, 53, 'ORG')}
+
+  Text: SSN: 123-45-6789, Account: 987654321012, Email: jane@example.com
+  Pred: [(5, 16, 'SSN'), (27, 39, 'ACCOUNT_NUM'), (48, 64, 'EMAIL')]
+  Gold: [(5, 16, 'SSN'), (27, 39, 'ACCOUNT_NUM'), (48, 64, 'EMAIL')]
+
+  Text: MRN: MRN-456789. Diagnosis: Hypertension. Call 317-555-1212.
+  Pred: [(5, 15, 'MRN'), (28, 40, 'DIAGNOSIS'), (47, 59, 'PHONE')]
+  Gold: [(5, 15, 'MRN'), (28, 40, 'DIAGNOSIS'), (47, 59, 'PHONE')]
+
+  Text: Dr. Sarah Johnson referred patient Tom Blake (MRN: MRN-112233) at St. Luke's Hos
+  Pred: [(4, 17, 'PERSON'), (35, 44, 'PERSON'), (51, 61, 'MRN'), (66, 74, 'GPE'), (74, 76, 'MRN'), (89, 102, 'DATE')]
+  Gold: [(4, 17, 'PERSON'), (34, 43, 'PERSON'), (51, 61, 'MRN'), (66, 83, 'ORG'), (87, 100, 'DATE')]
+  MISSED: {(66, 83, 'ORG'), (34, 43, 'PERSON'), (87, 100, 'DATE')}
+  EXTRA:  {(35, 44, 'PERSON'), (74, 76, 'MRN'), (89, 102, 'DATE'), (66, 74, 'GPE')}
+  Precision: 0.667  Recall: 0.714  F1: 0.690
+
+=== OOD Test Set: data/ai4privacy/ood_test.spacy ===
+  Evaluating on 5000 held-out examples...
+
+  Label               P      R     F1  TP   FP   FN
+  -------------- ------ ------ ------    --   --   --
+  ACCOUNT_NUM     0.956  0.537  0.688    65    3   56
+  DATE            0.931  0.633  0.753   162   12   94
+  EMAIL           0.998  0.998  0.998   500    1    1
+  GPE             0.968  0.948  0.958  1011   33   55
+  PERSON          0.969  0.932  0.950   497   16   36
+  PHONE           0.964  0.967  0.966   350   13   12
+
+  Micro  P=0.971  R=0.911  F1=0.940
+  Macro  P=0.964  R=0.836  F1=0.896
+
+  WARNING: ACCOUNT_NUM recall = 0.537 — consider more training data for this label
+  WARNING: DATE recall = 0.633 — consider more training data for this label
