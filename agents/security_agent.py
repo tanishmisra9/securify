@@ -34,6 +34,8 @@ PII_LEAK_PATTERNS = [
     r"\b(?:\+1[-.\s]?)?(?:\(?\d{3}\)?[-.\s]?)\d{3}[-.\s]?\d{4}\b",  # Phone
 ]
 
+HIGH_RISK_LABELS = {"PERSON", "SSN", "MRN", "ACCOUNT_NUM", "EMAIL", "PHONE"}
+
 
 def run_security_check(state: AgentState) -> AgentState:
     query = state["query"]
@@ -44,7 +46,12 @@ def run_security_check(state: AgentState) -> AgentState:
         re.search(pattern, query, flags=re.IGNORECASE) for pattern in INJECTION_PATTERNS
     )
     regex_leak = any(re.search(pattern, answer) for pattern in PII_LEAK_PATTERNS)
-    map_leak = any(v in answer for v in entity_map.values() if len(v) > 4)
+    map_leak = any(
+        v in answer
+        for k, v in state.get("entity_map", {}).items()
+        if len(v) > 4
+        and any(k.startswith(f"[{label}_") for label in HIGH_RISK_LABELS)
+    )
     pii_leak_detected = regex_leak or map_leak
 
     if injection_detected:
