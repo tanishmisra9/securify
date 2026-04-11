@@ -51,6 +51,56 @@ class QueryResponse(BaseModel):
     pii_leak_detected: bool
 
 
+def _suggest_questions(entity_counts: dict[str, int], filename: str) -> list[str]:
+    fname = filename.lower()
+    questions = []
+
+    if "DIAGNOSIS" in entity_counts:
+        questions.append("What is the primary diagnosis in this document?")
+    if "MRN" in entity_counts:
+        questions.append("What medical identifiers does this document contain?")
+    if "SSN" in entity_counts:
+        questions.append("What sensitive identifiers are present in this document?")
+    if "ACCOUNT_NUM" in entity_counts:
+        questions.append("What account information is referenced?")
+    if "PHONE" in entity_counts or "EMAIL" in entity_counts:
+        questions.append("What contact information appears in this document?")
+    if "ORG" in entity_counts:
+        questions.append("What organizations are mentioned?")
+
+    if any(k in fname for k in ["contract", "agreement", "employ"]):
+        questions.insert(0, "What is the compensation or salary in this agreement?")
+        questions.insert(1, "What are the termination or severance terms?")
+    elif any(k in fname for k in ["bank", "statement", "financial"]):
+        questions.insert(0, "What is the closing balance?")
+        questions.insert(1, "What were the largest transactions this period?")
+    elif any(k in fname for k in ["discharge", "medical", "patient", "health"]):
+        questions.insert(0, "What was the patient's primary diagnosis?")
+        questions.insert(1, "What were the discharge medications?")
+
+    seen = set()
+    result = []
+    for q in questions:
+        if q not in seen:
+            seen.add(q)
+            result.append(q)
+        if len(result) == 3:
+            break
+
+    fallbacks = [
+        "What are the key identifiers in this document?",
+        "Summarize the main purpose of this document.",
+        "What dates are referenced in this document?",
+    ]
+    for fb in fallbacks:
+        if len(result) == 3:
+            break
+        if fb not in seen:
+            result.append(fb)
+
+    return result[:3]
+
+
 @app.get("/api/health")
 async def health():
     return {"status": "ok"}
@@ -93,6 +143,7 @@ async def upload(file: UploadFile = File(...)):
             "entity_map": result.entity_map,
             "chunks": chunks,
             "total_entities": sum(result.entity_counts.values()),
+            "suggested_questions": _suggest_questions(result.entity_counts, file.filename or ""),
         }
     finally:
         tmp_path.unlink(missing_ok=True)

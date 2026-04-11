@@ -10,6 +10,7 @@ export interface DocState {
   entity_map: Record<string, string>;
   chunks: string[];
   total_entities: number;
+  suggested_questions: string[];
 }
 
 export interface ChatMessage {
