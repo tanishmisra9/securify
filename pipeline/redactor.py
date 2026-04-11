@@ -4,6 +4,7 @@ import os
 import re
 from dataclasses import dataclass, field
 from functools import lru_cache
+from pathlib import Path
 
 import spacy
 from spacy.tokens import Span
@@ -45,21 +46,36 @@ SECURIFY_LABELS = {
 # Do not substitute it with en_core_web_trf at inference because tokenizer behavior differs.
 @lru_cache(maxsize=1)
 def get_nlp() -> spacy.language.Language:
-    candidates = [
-        os.getenv("PII_MODEL_PATH", "models/pii_ner/model-best"),
-        "en_core_web_trf",
-        "en_core_web_sm",
-    ]
+    local = os.getenv("PII_MODEL_PATH", "models/pii_ner/model-best")
 
-    for model_name in candidates:
+    # Local model takes priority (dev machine)
+    if Path(local).exists():
+        return spacy.load(local)
+
+    # Production: pull from HuggingFace Hub
+    hf_repo = os.getenv("HF_MODEL_REPO", "")
+    hf_token = os.getenv("HF_TOKEN", "")
+    if hf_repo:
+        print(f"Downloading model from HuggingFace Hub: {hf_repo}")
+        from huggingface_hub import snapshot_download
+        model_path = snapshot_download(
+            repo_id=hf_repo,
+            token=hf_token or None,
+        )
+        print(f"Model downloaded to: {model_path}")
+        return spacy.load(model_path)
+
+    # Fallback for Railway if HF vars not set
+    for m in ["en_core_web_trf", "en_core_web_sm"]:
         try:
-            return spacy.load(model_name)
+            print(f"Falling back to: {m}")
+            return spacy.load(m)
         except OSError:
             continue
 
     raise RuntimeError(
-        "No spaCy model could be loaded. Train models/pii_ner/model-best "
-        "or install en_core_web_trf."
+        "No spaCy model available. Set HF_MODEL_REPO and HF_TOKEN "
+        "environment variables on Railway, or train models/pii_ner/model-best locally."
     )
 
 
