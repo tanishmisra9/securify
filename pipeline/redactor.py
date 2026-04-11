@@ -27,6 +27,11 @@ STRUCTURED_PATTERNS: list[tuple[str, str]] = [
     (r"\b(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\.?\s+\d{1,2},?\s+\d{4}\b", "DATE"),
     (r"\b\d{1,2}[/-]\d{1,2}[/-]\d{2,4}\b", "DATE"),
     (r"\b\d{4}-\d{2}-\d{2}\b", "DATE"),
+    (r"\b\d{5}(?:-\d{4})?\b", "GPE"),  # US ZIP / ZIP+4
+    (r"\b\d{1,5}\s+[A-Z][A-Za-z0-9]+(?:\s+[A-Za-z0-9]+){0,4}\s+"
+     r"(?:Street|St|Avenue|Ave|Road|Rd|Boulevard|Blvd|Drive|Dr|"
+     r"Lane|Ln|Court|Ct|Way|Place|Pl|Parkway|Pkwy|Highway|Hwy|"
+     r"Suite|Ste|Floor|Fl)\.?\b", "GPE"),  # Street addresses
 ]
 
 SECURIFY_LABELS = {
