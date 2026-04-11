@@ -31,7 +31,7 @@ const QUICK_TESTS = [
 ] as const;
 
 export default function ChatView() {
-  const { doc, chatHistory } = useAppStore();
+  const { doc, chatHistory, uploadSummary } = useAppStore();
   const { thinking, sendQuery } = useQuery();
   const [input, setInput] = useState('');
   const bottomRef = useRef<HTMLDivElement>(null);
@@ -53,7 +53,26 @@ export default function ChatView() {
     <div className="flex flex-col h-full">
       <div className="flex-1 overflow-y-auto px-8 py-6 space-y-4 min-h-0">
         {chatHistory.length === 0 && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex items-center justify-center h-full">
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="flex flex-col items-center justify-center h-full gap-4"
+          >
+            {uploadSummary && (
+              <div className="bg-surface2 border border-border rounded-xl px-5 py-4 max-w-[480px] w-full">
+                <p className="text-[0.65rem] font-semibold uppercase tracking-[0.1em] text-t3 mb-2">
+                  PII Redacted
+                </p>
+                <p className="text-[0.85rem] text-t1 leading-relaxed">
+                  Found and redacted{' '}
+                  <span className="text-accent font-medium">{doc?.total_entities}</span>{' '}
+                  entities: {uploadSummary}.
+                </p>
+                <p className="text-[0.72rem] text-t3 mt-2">
+                  None of this information will reach the LLM.
+                </p>
+              </div>
+            )}
             <p className="text-t3 text-sm">
               Ask anything about <span className="font-mono text-t2">{doc?.filename}</span>
             </p>

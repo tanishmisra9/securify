@@ -1,10 +1,11 @@
 export type View = 'chat' | 'redacted' | 'audit';
+export type EntityCountMap = Record<string, number>;
 
 export interface DocState {
   filename: string;
   original_text: string;
   redacted_text: string;
-  entity_counts: Record<string, number>;
+  entity_counts: EntityCountMap;
   entity_confidences: Record<string, number>;
   entity_map: Record<string, string>;
   chunks: string[];

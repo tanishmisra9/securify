@@ -4,11 +4,12 @@ import type { ChatMessage, DocState, View } from '../types';
 interface AppStore {
   doc: DocState | null;
   chatHistory: ChatMessage[];
+  uploadSummary: string;
   view: View;
   isLoading: boolean;
   loadingMessage: string;
 
-  setDoc: (doc: DocState) => void;
+  setDoc: (doc: DocState, uploadSummary?: string) => void;
   clearDoc: () => void;
   addMessage: (msg: ChatMessage) => void;
   setView: (view: View) => void;
@@ -18,15 +19,17 @@ interface AppStore {
 export const useAppStore = create<AppStore>((set) => ({
   doc: null,
   chatHistory: [],
+  uploadSummary: '',
   view: 'chat',
   isLoading: false,
   loadingMessage: '',
 
-  setDoc: (doc) => set({ doc, chatHistory: [], view: 'redacted' }),
+  setDoc: (doc, uploadSummary = '') => set({ doc, chatHistory: [], uploadSummary, view: 'redacted' }),
   clearDoc: () =>
     set({
       doc: null,
       chatHistory: [],
+      uploadSummary: '',
       view: 'chat',
       isLoading: false,
       loadingMessage: '',
