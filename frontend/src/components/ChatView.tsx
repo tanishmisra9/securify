@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 
 import { AnimatePresence, motion } from 'framer-motion';
-import { AlertTriangle, MessageCircle, Send, Zap } from 'lucide-react';
+import { AlertTriangle, Download, MessageCircle, Send, Zap } from 'lucide-react';
 
 import { useQuery } from '../hooks/useQuery';
 import { useAppStore } from '../store/useAppStore';
@@ -21,6 +21,31 @@ const SECURITY_TESTS = [
     text: 'Who is [PERSON_1]?',
   },
 ] as const;
+
+function exportChat(chatHistory: ChatMessage[], filename: string) {
+  const lines: string[] = [
+    '# Securify Chat Export',
+    `**Document:** ${filename}`,
+    `**Exported:** ${new Date().toLocaleString()}`,
+    '---',
+    '',
+  ];
+  for (const msg of chatHistory) {
+    if (msg.role === 'user') {
+      lines.push(`**You:** ${msg.content}`, '');
+    } else {
+      const verdict = msg.verdict ? ` *(${msg.verdict})*` : '';
+      lines.push(`**Securify${verdict}:** ${msg.content}`, '');
+    }
+  }
+  const blob = new Blob([lines.join('\n')], { type: 'text/markdown' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `securify-chat-${Date.now()}.md`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
 
 export default function ChatView() {
   const { doc, chatHistory, uploadSummary } = useAppStore();
@@ -44,6 +69,18 @@ export default function ChatView() {
 
   return (
     <div className="flex flex-col h-full">
+      {chatHistory.length > 0 && (
+        <div className="flex justify-end px-8 pt-3 pb-0 flex-shrink-0">
+          <button
+            onClick={() => exportChat(chatHistory, doc?.filename ?? 'document')}
+            title="Export chat"
+            className="text-t3 hover:text-t1 transition-colors"
+          >
+            <Download size={14} />
+          </button>
+        </div>
+      )}
+
       <div className="flex-1 overflow-y-auto px-8 py-6 space-y-4 min-h-0">
         {chatHistory.length === 0 && (
           <motion.div
