@@ -169,7 +169,7 @@ export default function RedactedView() {
               <span>Select text to flag missed PII</span>
             </p>
           </div>
-          <div ref={originalPaneRef} onMouseUp={handleOriginalMouseUp} className="relative flex-1 min-h-0">
+          <div ref={originalPaneRef} onMouseUp={handleOriginalMouseUp} className="relative flex flex-col flex-1 min-h-0">
             <DocumentRenderer text={doc.original_text} scrollContainerRef={originalRef} onScroll={() => syncScroll('original')} />
             {selection && (
               <div
