@@ -10,13 +10,14 @@ Production (Railway):
 from __future__ import annotations
 
 import json
+import os
 import tempfile
 from datetime import datetime
 from pathlib import Path
 
 from fastapi import FastAPI, File, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
@@ -198,6 +199,125 @@ async def query_endpoint(req: QueryRequest):
         injection_detected=state["injection_detected"],
         pii_leak_detected=state["pii_leak_detected"],
     )
+
+
+@app.post("/api/query/stream")
+async def query_stream(req: QueryRequest):
+    """
+    SSE endpoint. Streams the answer token by token.
+    Each event: data: {"token": "..."}\n\n
+    Final event: data: {"done": true, "verdict": "...", "injection_detected": bool, "pii_leak_detected": bool}\n\n
+    """
+    import asyncio
+    import re as _re
+
+    from agents.context_agent import retrieve_chunks
+    from agents.security_agent import HIGH_RISK_LABELS, INJECTION_PATTERNS, PII_LEAK_PATTERNS
+    from agents.synthesis_agent import SYSTEM_PROMPT, _heuristic_answer
+
+    injection = any(
+        _re.search(p, req.query, flags=_re.IGNORECASE) for p in INJECTION_PATTERNS
+    )
+
+    if injection:
+        async def blocked_stream():
+            msg = "This query was blocked by the security agent."
+            yield f"data: {json.dumps({'token': msg})}\n\n"
+            yield (
+                "data: "
+                f"{json.dumps({'done': True, 'verdict': 'BLOCKED: Prompt injection detected in query.', 'injection_detected': True, 'pii_leak_detected': False})}\n\n"
+            )
+
+        log_query(
+            req.query,
+            list(req.entity_map.keys()),
+            "BLOCKED: Prompt injection detected in query.",
+            False,
+            True,
+        )
+        return StreamingResponse(blocked_stream(), media_type="text/event-stream")
+
+    state = {
+        "query": req.query,
+        "route": "qa",
+        "redacted_chunks": req.chunks,
+        "context_chunks": [],
+        "answer": "",
+        "injection_detected": False,
+        "pii_leak_detected": False,
+        "security_verdict": "",
+        "entity_map": req.entity_map,
+    }
+    state = retrieve_chunks(state)
+    context_chunks = state.get("context_chunks", [])
+
+    api_key = os.getenv("OPENAI_API_KEY", "").strip()
+    model = os.getenv("SECURIFY_MODEL", "gpt-4o-mini")
+
+    async def event_stream():
+        full_answer = ""
+
+        if not api_key or not context_chunks:
+            answer = (
+                _heuristic_answer(req.query, context_chunks)
+                if context_chunks
+                else "I could not find relevant information in the redacted document."
+            )
+            yield f"data: {json.dumps({'token': answer})}\n\n"
+            full_answer = answer
+        else:
+            from openai import OpenAI
+
+            client = OpenAI(api_key=api_key)
+            context_block = "\n\n---\n\n".join(context_chunks)
+            user_prompt = (
+                f"Question:\n{req.query}\n\n"
+                f"Redacted Context:\n{context_block}\n\n"
+                "Answer using only this context."
+            )
+            try:
+                stream = client.chat.completions.create(
+                    model=model,
+                    temperature=0.2,
+                    max_tokens=500,
+                    stream=True,
+                    messages=[
+                        {"role": "system", "content": SYSTEM_PROMPT},
+                        {"role": "user", "content": user_prompt},
+                    ],
+                )
+                for chunk in stream:
+                    token = chunk.choices[0].delta.content or ""
+                    if token:
+                        full_answer += token
+                        yield f"data: {json.dumps({'token': token})}\n\n"
+                        await asyncio.sleep(0)
+            except Exception:
+                fallback = _heuristic_answer(req.query, context_chunks)
+                yield f"data: {json.dumps({'token': fallback})}\n\n"
+                full_answer = fallback
+
+        regex_leak = any(_re.search(p, full_answer) for p in PII_LEAK_PATTERNS)
+        map_leak = any(
+            v in full_answer
+            for k, v in req.entity_map.items()
+            if len(v) > 8 and any(k.startswith(f"[{lbl}_") for lbl in HIGH_RISK_LABELS)
+        )
+        pii_leak = regex_leak or map_leak
+
+        if pii_leak:
+            verdict = "BLOCKED: PII leak detected in generated answer."
+        else:
+            verdict = "PASS"
+
+        log_query(req.query, list(req.entity_map.keys()), verdict, pii_leak, False)
+
+        yield (
+            "data: "
+            f"{json.dumps({'done': True, 'verdict': verdict, 'injection_detected': False, 'pii_leak_detected': pii_leak})}\n\n"
+        )
+
+    return StreamingResponse(event_stream(), media_type="text/event-stream")
 
 
 @app.post("/api/flag", response_model=FlagResponse)

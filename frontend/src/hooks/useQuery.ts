@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 
-import { queryDoc } from '../api/client';
+import { queryDocStream } from '../api/client';
 import { useAppStore } from '../store/useAppStore';
 
 function uid() {
@@ -9,7 +9,7 @@ function uid() {
 
 export function useQuery() {
   const [thinking, setThinking] = useState(false);
-  const { doc, addMessage } = useAppStore();
+  const { doc, addMessage, updateLastMessage } = useAppStore();
 
   const sendQuery = useCallback(
     async (rawQuery: string) => {
@@ -17,30 +17,42 @@ export function useQuery() {
       if (!query || !doc || thinking) return;
 
       addMessage({ id: uid(), role: 'user', content: query, timestamp: Date.now() });
+      const placeholderId = uid();
+      addMessage({
+        id: placeholderId,
+        role: 'assistant',
+        content: '',
+        timestamp: Date.now(),
+      });
       setThinking(true);
 
       try {
-        const res = await queryDoc(query, doc.chunks, doc.entity_map);
-        addMessage({
-          id: uid(),
-          role: 'assistant',
-          content: res.answer,
-          verdict: res.verdict,
-          timestamp: Date.now(),
-        });
+        let accumulated = '';
+        await queryDocStream(
+          query,
+          doc.chunks,
+          doc.entity_map,
+          (token) => {
+            accumulated += token;
+            updateLastMessage({ content: accumulated });
+          },
+          (result) => {
+            updateLastMessage({
+              content: accumulated || result.answer,
+              verdict: result.verdict,
+            });
+          }
+        );
       } catch {
-        addMessage({
-          id: uid(),
-          role: 'assistant',
+        updateLastMessage({
           content: 'Something went wrong. Please try again.',
           verdict: 'ERROR',
-          timestamp: Date.now(),
         });
       } finally {
         setThinking(false);
       }
     },
-    [addMessage, doc, thinking]
+    [addMessage, doc, thinking, updateLastMessage]
   );
 
   return { thinking, sendQuery };

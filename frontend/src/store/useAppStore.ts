@@ -13,6 +13,7 @@ interface AppStore {
   updateDoc: (patch: Partial<DocState>) => void;
   clearDoc: () => void;
   addMessage: (msg: ChatMessage) => void;
+  updateLastMessage: (patch: Partial<ChatMessage>) => void;
   setView: (view: View) => void;
   setLoading: (loading: boolean, message?: string) => void;
 }
@@ -37,6 +38,13 @@ export const useAppStore = create<AppStore>((set) => ({
       loadingMessage: '',
     }),
   addMessage: (msg) => set((s) => ({ chatHistory: [...s.chatHistory, msg] })),
+  updateLastMessage: (patch) =>
+    set((s) => {
+      const h = [...s.chatHistory];
+      if (h.length === 0) return {};
+      h[h.length - 1] = { ...h[h.length - 1], ...patch };
+      return { chatHistory: h };
+    }),
   setView: (view) => set({ view }),
   setLoading: (isLoading, loadingMessage = '') => set({ isLoading, loadingMessage }),
 }));
