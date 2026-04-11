@@ -1,5 +1,7 @@
 import type { ReactNode, Ref, UIEventHandler } from 'react';
 
+import { PLACEHOLDER_RE } from './placeholderUtils';
+
 interface Props {
   text: string;
   redacted?: boolean;
@@ -8,7 +10,6 @@ interface Props {
 }
 
 const KEY_VALUE_RE = /^([A-Za-z][A-Za-z0-9\s()\/.'-]{1,40}):\s*(.*)$/;
-const PLACEHOLDER_RE = /\[([A-Z_]+)_(\d+)\]/g;
 
 export default function DocumentRenderer({
   text,

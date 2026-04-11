@@ -6,6 +6,7 @@ import { AlertTriangle, MessageCircle, Send, Zap } from 'lucide-react';
 import { useQuery } from '../hooks/useQuery';
 import { useAppStore } from '../store/useAppStore';
 import type { ChatMessage } from '../types';
+import InlineChips from './ui/InlineChips';
 import VerdictBadge from './ui/VerdictBadge';
 
 const QUICK_TESTS = [
@@ -159,7 +160,7 @@ function AssistantMessage({ msg }: { msg: ChatMessage }) {
       <div className="flex flex-col gap-1.5 max-w-[70%]">
         {msg.verdict && <VerdictBadge verdict={msg.verdict} />}
         <div className="bg-surface border border-border rounded-[4px_16px_16px_16px] px-4 py-2.5 text-t1 text-[0.9rem] leading-relaxed">
-          {msg.content}
+          <InlineChips text={msg.content} />
         </div>
       </div>
     </div>
