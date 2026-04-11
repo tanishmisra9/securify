@@ -12,8 +12,10 @@ from __future__ import annotations
 import json
 import os
 import tempfile
+import zipfile
 from datetime import datetime
 from pathlib import Path
+import uuid as _uuid
 
 from fastapi import FastAPI, File, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
@@ -30,6 +32,8 @@ from pipeline.redactor import redact
 app = FastAPI(title="Securify API", docs_url="/api/docs")
 init_db()
 _graph = build_graph()
+BATCH_JOBS_DIR = Path("data/batch_jobs")
+BATCH_JOBS_DIR.mkdir(parents=True, exist_ok=True)
 
 app.add_middleware(
     CORSMiddleware,
@@ -356,6 +360,82 @@ async def flag_entity(req: FlagRequest):
         entity_counts=new_counts,
         placeholder=placeholder,
     )
+
+
+@app.post("/api/batch/submit")
+async def batch_submit(file: UploadFile = File(...)):
+    """Accept a .zip of PDF/DOCX/TXT files. Returns a job_id to poll."""
+    if not (file.filename or "").endswith(".zip"):
+        raise HTTPException(400, "Only .zip files accepted for batch processing.")
+
+    job_id = str(_uuid.uuid4())
+    job_dir = BATCH_JOBS_DIR / job_id
+    job_dir.mkdir(parents=True)
+
+    zip_path = job_dir / "upload.zip"
+    zip_path.write_bytes(await file.read())
+
+    extracted_paths = []
+    allowed = {".pdf", ".docx", ".txt"}
+    with zipfile.ZipFile(zip_path, "r") as zf:
+        for name in zf.namelist():
+            if Path(name).suffix.lower() in allowed:
+                out = job_dir / Path(name).name
+                out.write_bytes(zf.read(name))
+                extracted_paths.append(str(out))
+
+    if not extracted_paths:
+        raise HTTPException(400, "No supported files (PDF/DOCX/TXT) found in ZIP.")
+
+    try:
+        from batch.worker import process_batch
+
+        task = process_batch.apply_async(args=[job_id, extracted_paths])
+        (job_dir / "task_id.txt").write_text(task.id)
+        return {
+            "job_id": job_id,
+            "task_id": task.id,
+            "file_count": len(extracted_paths),
+            "status": "queued",
+        }
+    except Exception as e:
+        raise HTTPException(503, f"Batch worker unavailable: {e}. Start Redis and Celery worker.")
+
+
+@app.get("/api/batch/{job_id}")
+async def batch_status(job_id: str):
+    """Poll batch job status."""
+    job_dir = BATCH_JOBS_DIR / job_id
+    if not job_dir.exists():
+        raise HTTPException(404, f"Job '{job_id}' not found.")
+
+    task_id_file = job_dir / "task_id.txt"
+    if not task_id_file.exists():
+        raise HTTPException(500, "Task ID not found for this job.")
+
+    try:
+        from celery.result import AsyncResult
+        from batch.worker import app as celery_app
+
+        result = AsyncResult(task_id_file.read_text().strip(), app=celery_app)
+
+        if result.state == "PENDING":
+            return {"job_id": job_id, "status": "queued", "progress": 0}
+        elif result.state == "PROGRESS":
+            meta = result.info or {}
+            pct = int(meta.get("current", 0) / max(meta.get("total", 1), 1) * 100)
+            return {
+                "job_id": job_id,
+                "status": "processing",
+                "progress": pct,
+                "partial_results": meta.get("results", []),
+            }
+        elif result.state == "SUCCESS":
+            return {"job_id": job_id, "status": "complete", "progress": 100, **result.result}
+        else:
+            return {"job_id": job_id, "status": "error", "error": str(result.info)}
+    except Exception as e:
+        raise HTTPException(503, f"Could not reach batch worker: {e}")
 
 
 @app.get("/api/audit")
