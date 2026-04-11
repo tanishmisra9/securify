@@ -48,24 +48,24 @@ SECURIFY_LABELS = {
 def get_nlp() -> spacy.language.Language:
     local = os.getenv("PII_MODEL_PATH", "models/pii_ner/model-best")
 
-    # Local model takes priority (dev machine)
     if Path(local).exists():
-        return spacy.load(local)
+        try:
+            return spacy.load(local)
+        except Exception as e:
+            print(f"Local model load failed: {e}")
 
-    # Production: pull from HuggingFace Hub
     hf_repo = os.getenv("HF_MODEL_REPO", "")
     hf_token = os.getenv("HF_TOKEN", "")
     if hf_repo:
-        print(f"Downloading model from HuggingFace Hub: {hf_repo}")
-        from huggingface_hub import snapshot_download
-        model_path = snapshot_download(
-            repo_id=hf_repo,
-            token=hf_token or None,
-        )
-        print(f"Model downloaded to: {model_path}")
-        return spacy.load(model_path)
+        try:
+            from huggingface_hub import snapshot_download
+            model_path = snapshot_download(
+                repo_id=hf_repo, token=hf_token or None
+            )
+            return spacy.load(model_path)
+        except Exception as e:
+            print(f"HF model load failed: {e}")
 
-    # Fallback for Railway if HF vars not set
     for m in ["en_core_web_trf", "en_core_web_sm"]:
         try:
             print(f"Falling back to: {m}")
@@ -73,10 +73,7 @@ def get_nlp() -> spacy.language.Language:
         except OSError:
             continue
 
-    raise RuntimeError(
-        "No spaCy model available. Set HF_MODEL_REPO and HF_TOKEN "
-        "environment variables on Railway, or train models/pii_ner/model-best locally."
-    )
+    raise RuntimeError("No spaCy model available.")
 
 
 def redact(text: str) -> RedactionResult:
