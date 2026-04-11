@@ -1,9 +1,29 @@
-import { useCallback, useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { Printer } from 'lucide-react';
 
+import { flagEntity } from '../api/client';
 import { useAppStore } from '../store/useAppStore';
 import DocumentRenderer from './ui/DocumentRenderer';
+
+const FLAG_LABELS = [
+  'PERSON',
+  'ORG',
+  'GPE',
+  'DATE',
+  'SSN',
+  'MRN',
+  'EMAIL',
+  'PHONE',
+  'ACCOUNT_NUM',
+  'DIAGNOSIS',
+] as const;
+
+interface SelectionState {
+  text: string;
+  x: number;
+  y: number;
+}
 
 function exportRedactedPdf(redactedText: string, filename: string) {
   const win = window.open('', '_blank');
@@ -41,12 +61,28 @@ function exportRedactedPdf(redactedText: string, filename: string) {
 }
 
 export default function RedactedView() {
-  const { doc } = useAppStore();
+  const { doc, updateDoc } = useAppStore();
   if (!doc) return null;
 
   const originalRef = useRef<HTMLDivElement>(null);
   const redactedRef = useRef<HTMLDivElement>(null);
+  const originalPaneRef = useRef<HTMLDivElement>(null);
+  const popoverRef = useRef<HTMLDivElement>(null);
   const syncLockRef = useRef<'original' | 'redacted' | null>(null);
+  const [selection, setSelection] = useState<SelectionState | null>(null);
+  const [flagLabel, setFlagLabel] = useState<(typeof FLAG_LABELS)[number]>('PERSON');
+  const [isFlagging, setIsFlagging] = useState(false);
+
+  useEffect(() => {
+    if (!selection) return;
+    const onMouseDown = (event: MouseEvent) => {
+      const target = event.target as Node | null;
+      if (target && popoverRef.current?.contains(target)) return;
+      setSelection(null);
+    };
+    document.addEventListener('mousedown', onMouseDown);
+    return () => document.removeEventListener('mousedown', onMouseDown);
+  }, [selection]);
 
   const syncScroll = useCallback(
     (source: 'original' | 'redacted') => {
@@ -69,12 +105,102 @@ export default function RedactedView() {
     []
   );
 
+  const handleOriginalMouseUp = useCallback(() => {
+    const sel = window.getSelection();
+    if (!sel || sel.isCollapsed || sel.rangeCount === 0) {
+      setSelection(null);
+      return;
+    }
+
+    const anchorNode = sel.anchorNode;
+    if (!anchorNode || !originalPaneRef.current?.contains(anchorNode)) {
+      setSelection(null);
+      return;
+    }
+
+    const selectedText = sel.toString().trim();
+    if (!selectedText) {
+      setSelection(null);
+      return;
+    }
+
+    const rect = sel.getRangeAt(0).getBoundingClientRect();
+    const containerRect = originalPaneRef.current.getBoundingClientRect();
+    const x = Math.min(Math.max(rect.left - containerRect.left, 8), Math.max(containerRect.width - 230, 8));
+    const y = Math.max(rect.bottom - containerRect.top + 8, 8);
+    setSelection({ text: selectedText, x, y });
+  }, []);
+
+  const handleFlagConfirm = useCallback(async () => {
+    if (!selection || isFlagging) return;
+    setIsFlagging(true);
+    try {
+      const result = await flagEntity(
+        selection.text,
+        flagLabel,
+        doc.original_text,
+        doc.redacted_text,
+        doc.entity_map,
+        doc.entity_counts
+      );
+      updateDoc({
+        redacted_text: result.redacted_text,
+        entity_map: result.entity_map,
+        entity_counts: result.entity_counts,
+        total_entities: Object.values(result.entity_counts).reduce((sum, n) => sum + n, 0),
+      });
+      setSelection(null);
+      window.getSelection()?.removeAllRanges();
+    } catch (error) {
+      const msg = error instanceof Error ? error.message : 'Flag failed';
+      window.alert(msg);
+    } finally {
+      setIsFlagging(false);
+    }
+  }, [selection, isFlagging, flagLabel, doc, updateDoc]);
+
   return (
     <div className="h-full min-h-0 flex flex-col px-8 py-6 gap-4 overflow-hidden">
       <div className="flex gap-5 flex-1 min-h-0 overflow-hidden">
         <div className="flex-1 flex flex-col min-w-0">
-          <p className="section-label mb-2">Original document</p>
-          <DocumentRenderer text={doc.original_text} scrollContainerRef={originalRef} onScroll={() => syncScroll('original')} />
+          <div className="flex items-center justify-between mb-2">
+            <p className="section-label">Original document</p>
+            <p className="text-[0.62rem] text-t3 flex items-center gap-1">
+              <span>Select text to flag missed PII</span>
+            </p>
+          </div>
+          <div ref={originalPaneRef} onMouseUp={handleOriginalMouseUp} className="relative flex-1 min-h-0">
+            <DocumentRenderer text={doc.original_text} scrollContainerRef={originalRef} onScroll={() => syncScroll('original')} />
+            {selection && (
+              <div
+                ref={popoverRef}
+                style={{ left: selection.x, top: selection.y }}
+                className="absolute z-20 min-w-[220px] rounded-lg border border-border2 bg-surface2 px-3 py-2 shadow-xl"
+              >
+                <p className="text-[0.66rem] text-t3 mb-2 truncate">{selection.text}</p>
+                <div className="flex items-center gap-2">
+                  <select
+                    value={flagLabel}
+                    onChange={(e) => setFlagLabel(e.target.value as (typeof FLAG_LABELS)[number])}
+                    className="bg-surface border border-border2 rounded-md px-2 py-1 text-[0.7rem] text-t1 focus:outline-none"
+                  >
+                    {FLAG_LABELS.map((label) => (
+                      <option key={label} value={label}>
+                        {label}
+                      </option>
+                    ))}
+                  </select>
+                  <button
+                    onClick={() => void handleFlagConfirm()}
+                    disabled={isFlagging}
+                    className="text-[0.68rem] border border-border2 rounded-md px-2 py-1 text-t2 hover:text-t1 hover:border-accent disabled:opacity-60"
+                  >
+                    Flag as PII
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
 
         <div className="flex-1 flex flex-col min-w-0">

@@ -10,6 +10,7 @@ interface AppStore {
   loadingMessage: string;
 
   setDoc: (doc: DocState, uploadSummary?: string) => void;
+  updateDoc: (patch: Partial<DocState>) => void;
   clearDoc: () => void;
   addMessage: (msg: ChatMessage) => void;
   setView: (view: View) => void;
@@ -25,6 +26,7 @@ export const useAppStore = create<AppStore>((set) => ({
   loadingMessage: '',
 
   setDoc: (doc, uploadSummary = '') => set({ doc, chatHistory: [], uploadSummary, view: 'redacted' }),
+  updateDoc: (patch) => set((s) => ({ doc: s.doc ? { ...s.doc, ...patch } : null })),
   clearDoc: () =>
     set({
       doc: null,

@@ -42,3 +42,37 @@ export async function fetchAudit(): Promise<AuditRow[]> {
   if (!res.ok) throw new Error('Failed to fetch audit log');
   return res.json();
 }
+
+export interface FlagResult {
+  redacted_text: string;
+  entity_map: Record<string, string>;
+  entity_counts: Record<string, number>;
+  placeholder: string;
+}
+
+export async function flagEntity(
+  text: string,
+  label: string,
+  original_text: string,
+  redacted_text: string,
+  entity_map: Record<string, string>,
+  entity_counts: Record<string, number>
+): Promise<FlagResult> {
+  const res = await fetch('/api/flag', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      text,
+      label,
+      original_text,
+      redacted_text,
+      entity_map,
+      entity_counts,
+    }),
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.detail ?? 'Flag failed');
+  }
+  return res.json();
+}

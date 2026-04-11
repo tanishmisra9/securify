@@ -51,6 +51,22 @@ class QueryResponse(BaseModel):
     pii_leak_detected: bool
 
 
+class FlagRequest(BaseModel):
+    text: str
+    label: str
+    original_text: str
+    redacted_text: str
+    entity_map: dict[str, str]
+    entity_counts: dict[str, int]
+
+
+class FlagResponse(BaseModel):
+    redacted_text: str
+    entity_map: dict[str, str]
+    entity_counts: dict[str, int]
+    placeholder: str
+
+
 def _suggest_questions(entity_counts: dict[str, int], filename: str) -> list[str]:
     fname = filename.lower()
     questions = []
@@ -181,6 +197,44 @@ async def query_endpoint(req: QueryRequest):
         verdict=state["security_verdict"],
         injection_detected=state["injection_detected"],
         pii_leak_detected=state["pii_leak_detected"],
+    )
+
+
+@app.post("/api/flag", response_model=FlagResponse)
+async def flag_entity(req: FlagRequest):
+    if not req.text.strip():
+        raise HTTPException(400, "Selected text cannot be empty.")
+    if req.label not in {
+        "PERSON",
+        "ORG",
+        "GPE",
+        "DATE",
+        "SSN",
+        "MRN",
+        "EMAIL",
+        "PHONE",
+        "ACCOUNT_NUM",
+        "DIAGNOSIS",
+    }:
+        raise HTTPException(400, f"Invalid label '{req.label}'.")
+
+    existing = [k for k in req.entity_map if k.startswith(f"[{req.label}_")]
+    next_idx = len(existing) + 1
+    placeholder = f"[{req.label}_{next_idx}]"
+
+    new_map = {**req.entity_map, placeholder: req.text}
+    new_counts = {**req.entity_counts}
+    new_counts[req.label] = new_counts.get(req.label, 0) + 1
+
+    import re
+
+    new_redacted = re.sub(re.escape(req.text), placeholder, req.redacted_text)
+
+    return FlagResponse(
+        redacted_text=new_redacted,
+        entity_map=new_map,
+        entity_counts=new_counts,
+        placeholder=placeholder,
     )
 
 
