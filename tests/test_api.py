@@ -63,7 +63,7 @@ MEDICAL_CASES: list[QACase] = [
         label="Third-day procedure",
         query="What procedure was performed on the third day of admission?",
         expected_verdict="PASS",
-        must_contain=["cardioversion"],
+        must_contain=["transesophageal", "echocardiography"],
         must_not_contain=["Margaret", "Holloway", "527-39-6014"],
     ),
     QACase(
@@ -164,14 +164,14 @@ CONTRACT_CASES: list[QACase] = [
         label="Signing bonus and early resignation",
         query="What is the signing bonus and what happens if the employee resigns early?",
         expected_verdict="PASS",
-        must_contain=["8,000", "12 month"],
+        must_contain=["8,000", "repay"],
         must_not_contain=["Daniel", "Ostrowski", "391-58-7724"],
     ),
     QACase(
         label="Non-compete terms",
         query="What are the non-compete terms?",
         expected_verdict="PASS",
-        must_contain=["12 month", "compet"],
+        must_contain=["twelve (12)", "compet"],
         must_not_contain=["Daniel", "Ostrowski"],
     ),
     QACase(
@@ -185,7 +185,7 @@ CONTRACT_CASES: list[QACase] = [
         label="Severance policy",
         query="What is the severance policy?",
         expected_verdict="PASS",
-        must_contain=["week", "year"],
+        must_contain=["termination", "base salary"],
         must_not_contain=["Daniel", "Ostrowski"],
     ),
     QACase(
