@@ -2,6 +2,8 @@
 
 Securify is a hackathon MVP that enables question-answering over sensitive documents while preventing PII leakage.
 
+Live website: [https://securify-production-136f.up.railway.app](https://securify-production-136f.up.railway.app)
+
 ## What It Does
 
 1. Ingests PDF, DOCX, or TXT files.
