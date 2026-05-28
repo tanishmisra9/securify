@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 
 import { AnimatePresence, motion } from 'framer-motion';
-import { AlertTriangle, Download, MessageCircle, Send, Zap } from 'lucide-react';
+import { AlertTriangle, Download, MessageCircle, Send, Shield, Zap } from 'lucide-react';
 
 import { useQuery } from '../hooks/useQuery';
 import { useAppStore } from '../store/useAppStore';
@@ -89,7 +89,10 @@ export default function ChatView() {
             className="flex flex-col items-center justify-center h-full gap-4"
           >
             {uploadSummary && (
-              <div className="bg-surface2 border border-border rounded-xl px-5 py-4 max-w-[480px] w-full">
+              <div
+                className="bg-[rgba(15,22,36,0.65)] backdrop-blur-glass border border-border rounded-xl px-5 py-4 max-w-[480px] w-full"
+                style={{ boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.05), 0 4px 20px rgba(0,0,0,0.28)' }}
+              >
                 <p className="text-[0.65rem] font-semibold uppercase tracking-[0.1em] text-t3 mb-2">
                   PII Redacted
                 </p>
@@ -145,7 +148,7 @@ export default function ChatView() {
               key={question}
               onClick={() => void send(question)}
               disabled={thinking}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-[7px] text-[0.73rem] border transition-all duration-150 font-sans disabled:opacity-40 bg-surface2 border-border text-t3 hover:border-accent2 hover:text-t1"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[0.73rem] border transition-all duration-150 font-sans disabled:opacity-40 bg-surface2 border-border text-t3 hover:border-accent hover:bg-[rgba(59,130,246,0.08)] hover:text-t1"
             >
               <MessageCircle size={12} strokeWidth={2} />
               {question}
@@ -198,15 +201,18 @@ export default function ChatView() {
           }}
           placeholder="Ask anything about this document…"
           disabled={thinking}
-          className="flex-1 bg-surface border border-border2 rounded-xl px-4 py-3 text-t1 font-sans text-[0.92rem] placeholder:text-t3 focus:outline-none focus:border-accent disabled:opacity-50 transition-colors"
+          className="flex-1 bg-[rgba(15,22,36,0.65)] backdrop-blur-glass border border-border2 rounded-full px-5 py-3 text-t1 font-sans text-[0.9rem] placeholder:text-t3 focus:outline-none focus:border-accent transition-colors disabled:opacity-50"
+          style={{ boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.05)' }}
         />
-        <button
+        <motion.button
+          whileTap={{ scale: 0.94 }}
+          transition={{ type: 'spring', stiffness: 400, damping: 24 }}
           onClick={() => void send()}
           disabled={!input.trim() || thinking}
-          className="w-11 h-11 rounded-xl bg-accent hover:bg-accent2 flex items-center justify-center flex-shrink-0 disabled:opacity-40 disabled:cursor-not-allowed transition-colors shadow-lg shadow-accent/20"
+          className="w-11 h-11 rounded-full bg-accent hover:bg-accent2 flex items-center justify-center flex-shrink-0 disabled:opacity-40 disabled:cursor-not-allowed transition-colors shadow-lg shadow-accent/20"
         >
           <Send size={16} className="text-white" strokeWidth={2} />
-        </button>
+        </motion.button>
       </div>
     </div>
   );
@@ -214,8 +220,11 @@ export default function ChatView() {
 
 function Avatar() {
   return (
-    <div className="w-8 h-8 rounded-full bg-surface2 border border-border2 flex items-center justify-center flex-shrink-0 mt-0.5">
-      <span className="font-semibold text-[0.62rem] text-accent font-sans">AI</span>
+    <div
+      className="w-8 h-8 rounded-full bg-[rgba(59,130,246,0.12)] border border-[rgba(59,130,246,0.2)] flex items-center justify-center flex-shrink-0 mt-0.5"
+      style={{ boxShadow: '0 0 16px rgba(59,130,246,0.10)' }}
+    >
+      <Shield size={13} strokeWidth={1.5} className="text-accent" />
     </div>
   );
 }
@@ -223,7 +232,10 @@ function Avatar() {
 function UserMessage({ msg }: { msg: ChatMessage }) {
   return (
     <div className="flex justify-end">
-      <div className="max-w-[70%] bg-chip border border-chipBdr rounded-[16px_16px_4px_16px] px-4 py-2.5 text-t1 text-[0.9rem] leading-relaxed">
+      <div
+        className="max-w-[70%] bg-[rgba(59,130,246,0.14)] border border-[rgba(59,130,246,0.25)] rounded-[18px_18px_4px_18px] px-4 py-2.5 text-t1 text-[0.9rem] leading-relaxed"
+        style={{ boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.06)' }}
+      >
         {msg.content}
       </div>
     </div>
@@ -236,7 +248,10 @@ function AssistantMessage({ msg }: { msg: ChatMessage }) {
       <Avatar />
       <div className="flex flex-col gap-1.5 max-w-[70%]">
         {msg.verdict && <VerdictBadge verdict={msg.verdict} />}
-        <div className="bg-surface border border-border rounded-[4px_16px_16px_16px] px-4 py-2.5 text-t1 text-[0.9rem] leading-relaxed">
+        <div
+          className="bg-[rgba(15,22,36,0.65)] backdrop-blur-sm border border-border rounded-[4px_18px_18px_18px] px-4 py-2.5 text-t1 text-[0.9rem] leading-relaxed"
+          style={{ boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.04)' }}
+        >
           <InlineChips text={msg.content} />
         </div>
       </div>
@@ -250,7 +265,7 @@ function ThinkingDots() {
       {[0, 1, 2].map((i) => (
         <motion.span
           key={i}
-          className="w-[6px] h-[6px] rounded-full bg-t3"
+          className="w-[6px] h-[6px] rounded-full bg-accent/40"
           animate={{ scale: [0.6, 1, 0.6], opacity: [0.3, 1, 0.3] }}
           transition={{ duration: 1.2, repeat: Infinity, delay: i * 0.2 }}
         />

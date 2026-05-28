@@ -37,11 +37,11 @@ export default function Sidebar() {
     <aside className="w-[260px] flex-shrink-0 bg-surface border-r border-border flex flex-col overflow-hidden">
       <div className="px-4 py-5 border-b border-border flex-shrink-0">
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-[9px] bg-accent flex items-center justify-center shadow-lg shadow-accent/20 flex-shrink-0">
-            <Shield size={15} className="text-white" strokeWidth={2.5} />
+          <div className="w-9 h-9 rounded-full bg-[rgba(59,130,246,0.12)] flex items-center justify-center shadow-[0_0_28px_rgba(59,130,246,0.14)] flex-shrink-0">
+            <Shield size={16} className="text-accent" strokeWidth={1.5} />
           </div>
           <div className="flex flex-col justify-center leading-tight">
-            <span className="font-semibold text-[1rem] tracking-tight text-t1">Securify</span>
+            <span className="font-semibold text-[1rem] tracking-[-0.02em] text-t1">Securify</span>
             <p className="text-t3 text-[0.68rem] -mt-0.5">PII-safe document intelligence</p>
           </div>
         </div>
@@ -55,7 +55,8 @@ export default function Sidebar() {
               key="doc-loaded"
               initial={{ opacity: 0, y: 4 }}
               animate={{ opacity: 1, y: 0 }}
-              className="bg-surface2 border border-border rounded-[9px] px-3 py-2.5"
+              className="bg-surface2 border border-border rounded-[10px] px-3 py-2.5 shadow-panel"
+              style={{ boxShadow: 'var(--inner-highlight), 0 4px 12px rgba(0,0,0,0.28)' }}
             >
               <p className="font-mono text-[0.73rem] text-t1 truncate">{doc.filename}</p>
               <p className="text-t3 text-[0.68rem] mt-0.5">{doc.total_entities} entities redacted</p>
@@ -99,7 +100,7 @@ export default function Sidebar() {
               className={[
                 'flex items-center gap-2.5 w-full px-3 py-2 rounded-[8px] text-left text-[0.82rem] font-sans transition-all duration-150 disabled:opacity-30 disabled:cursor-not-allowed',
                 view === key && doc
-                  ? 'bg-surface2 border border-border2 text-accent'
+                  ? 'relative pl-3 bg-surface2 border border-border2 text-accent before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:h-4 before:w-[2px] before:rounded-full before:bg-accent'
                   : 'text-t2 hover:bg-surface2 hover:text-t1 border border-transparent',
               ].join(' ')}
             >
@@ -124,7 +125,7 @@ export default function Sidebar() {
           />
           <button
             onClick={() => fileRef.current?.click()}
-            className="w-full flex items-center justify-center gap-2 rounded-[9px] border border-border2 bg-surface2 px-3 py-2 text-[0.78rem] text-t2 hover:text-t1 hover:border-accent transition-colors"
+            className="w-full flex items-center justify-center gap-2 rounded-[10px] border border-border2 bg-surface2 px-3 py-2.5 text-[0.78rem] text-t2 hover:text-t1 hover:border-accent hover:bg-[rgba(59,130,246,0.06)] transition-all duration-200"
           >
             {doc ? <RefreshCcw size={13} /> : <Upload size={13} />}
             {doc ? 'Change document' : 'Choose a document'}

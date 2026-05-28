@@ -26,6 +26,19 @@ export default {
         chipTxt: '#93c5fd',
         chipBdr: '#1d4ed8',
       },
+      boxShadow: {
+        panel: '0 1px 1px rgba(0,0,0,0.18), 0 4px 12px rgba(0,0,0,0.28), 0 16px 40px rgba(0,0,0,0.22)',
+        'panel-hover':
+          '0 2px 2px rgba(0,0,0,0.22), 0 8px 24px rgba(0,0,0,0.38), 0 24px 56px rgba(0,0,0,0.28)',
+        'accent-glow': '0 0 36px rgba(59,130,246,0.14)',
+      },
+      backdropBlur: {
+        glass: '24px',
+      },
+      letterSpacing: {
+        'tighter-xl': '-0.045em',
+        'tighter-lg': '-0.03em',
+      },
       animation: {
         'fade-up': 'fadeUp 0.3s ease-out',
         'fade-in': 'fadeIn 0.2s ease-out',

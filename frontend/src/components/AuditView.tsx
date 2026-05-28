@@ -38,7 +38,10 @@ export default function AuditView() {
       <div className="flex-1 border border-border rounded-xl overflow-hidden min-h-0">
         <div className="h-full overflow-y-auto">
           <table className="w-full border-collapse">
-            <thead className="sticky top-0 bg-surface border-b border-border z-10">
+            <thead
+              className="sticky top-0 bg-[rgba(15,22,36,0.92)] backdrop-blur-[16px] border-b border-border z-10"
+              style={{ boxShadow: 'inset 0 -1px 0 rgba(255,255,255,0.04)' }}
+            >
               <tr>
                 {['Timestamp', 'Query', 'Entities', 'Verdict', 'Injection'].map((h) => (
                   <th
@@ -71,7 +74,7 @@ export default function AuditView() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: i * 0.03 }}
                     className={[
-                      'border-b border-border last:border-0 transition-colors',
+                      'border-b border-border last:border-0 transition-colors duration-150',
                       row.verdict === 'PASS'
                         ? 'bg-success/[0.03] hover:bg-success/[0.06]'
                         : 'bg-danger/[0.04] hover:bg-danger/[0.07]',

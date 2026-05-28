@@ -9,9 +9,13 @@ import Sidebar from './components/Sidebar';
 import { useAppStore } from './store/useAppStore';
 
 const pageVariants = {
-  initial: { opacity: 0, x: 12 },
-  animate: { opacity: 1, x: 0, transition: { duration: 0.22, ease: 'easeOut' } },
-  exit: { opacity: 0, x: -8, transition: { duration: 0.15 } },
+  initial: { opacity: 0, filter: 'blur(8px)' },
+  animate: {
+    opacity: 1,
+    filter: 'blur(0px)',
+    transition: { duration: 0.32, ease: [0.22, 1, 0.36, 1] },
+  },
+  exit: { opacity: 0, filter: 'blur(4px)', transition: { duration: 0.18 } },
 };
 
 export default function App() {
@@ -73,7 +77,10 @@ function LoadingOverlay() {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0, transition: { duration: 0.2 } }}
         >
-          <div className="w-10 h-10 rounded-full border-2 border-border2 border-t-accent animate-spin" />
+          <div className="relative w-10 h-10">
+            <div className="absolute inset-0 rounded-full border border-border2 animate-ping opacity-20" />
+            <div className="absolute inset-0 rounded-full border-2 border-border2 border-t-accent animate-spin" />
+          </div>
           <p className="text-t2 text-sm font-sans">{loadingMessage || 'Processing…'}</p>
         </motion.div>
       )}

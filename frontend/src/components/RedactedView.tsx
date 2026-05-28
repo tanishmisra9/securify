@@ -163,7 +163,7 @@ export default function RedactedView() {
     <div className="h-full min-h-0 flex flex-col px-8 py-6 gap-4 overflow-hidden">
       <div className="flex gap-5 flex-1 min-h-0 overflow-hidden">
         <div className="flex-1 flex flex-col min-w-0">
-          <div className="flex items-center justify-between mb-2">
+          <div className="flex items-center justify-between mb-3">
             <p className="section-label">Original document</p>
             <p className="text-[0.62rem] text-t3 flex items-center gap-1">
               <span>Select text to flag missed PII</span>
@@ -175,7 +175,7 @@ export default function RedactedView() {
               <div
                 ref={popoverRef}
                 style={{ left: selection.x, top: selection.y }}
-                className="absolute z-20 min-w-[220px] rounded-lg border border-border2 bg-surface2 px-3 py-2 shadow-xl"
+                className="absolute z-20 min-w-[220px] rounded-xl border border-border2 bg-[rgba(15,22,36,0.88)] backdrop-blur-glass px-3 py-3 shadow-[0_8px_32px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.06)]"
               >
                 <p className="text-[0.66rem] text-t3 mb-2 truncate">{selection.text}</p>
                 <div className="flex items-center gap-2">
@@ -204,12 +204,11 @@ export default function RedactedView() {
         </div>
 
         <div className="flex-1 flex flex-col min-w-0">
-          <div className="flex items-center justify-between mb-2">
+          <div className="flex items-center justify-between mb-3">
             <p className="section-label">Redacted copy</p>
             <button
               onClick={() => exportRedactedPdf(doc.redacted_text, doc.filename)}
-              className="flex items-center gap-1 text-[0.68rem] text-t3 hover:text-t1
-                         transition-colors border border-border rounded-md px-2 py-0.5"
+              className="flex items-center gap-1 text-[0.68rem] text-t3 hover:text-accent transition-colors border border-border hover:border-accent/40 rounded-full px-2.5 py-0.5"
               title="Export redacted document as PDF"
             >
               <Printer size={11} />

@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 
 import { motion } from 'framer-motion';
-import { Shield } from 'lucide-react';
+import { Shield, Upload } from 'lucide-react';
 
 import { useUpload } from '../hooks/useUpload';
 
@@ -33,16 +33,17 @@ export default function EmptyState() {
         initial={{ scale: 0.8, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ type: 'spring', stiffness: 200, damping: 20 }}
-        className="w-16 h-16 rounded-2xl bg-surface border border-border flex items-center justify-center mb-6 shadow-xl shadow-accent/5"
+        className="w-20 h-20 rounded-full bg-[rgba(59,130,246,0.10)] flex items-center justify-center mb-6"
+        style={{ boxShadow: '0 0 40px rgba(59,130,246,0.14)' }}
       >
-        <Shield size={26} className="text-accent" strokeWidth={1.75} />
+        <Shield size={32} className="text-accent" strokeWidth={1.5} />
       </motion.div>
 
       <motion.h1
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.1 }}
-        className="text-[1.4rem] font-semibold tracking-tight text-t1 mb-3"
+        className="text-[1.5rem] font-semibold tracking-[-0.03em] text-t1 mb-3"
       >
         Upload your documents
       </motion.h1>
@@ -83,10 +84,16 @@ export default function EmptyState() {
             void handleFile(e.dataTransfer.files?.[0] ?? null);
           }}
           className={[
-            'w-full rounded-2xl border border-border2 bg-surface/80 px-8 py-10 text-left transition-colors',
-            dragActive ? 'border-accent bg-surface2' : 'border-border2 hover:border-accent2',
+            'w-full rounded-2xl border bg-[rgba(15,22,36,0.6)] backdrop-blur-glass px-8 py-12 transition-all duration-200 cursor-pointer',
+            'shadow-[inset_0_1px_0_rgba(255,255,255,0.05),0_4px_20px_rgba(0,0,0,0.3)]',
+            dragActive
+              ? 'border-accent bg-[rgba(59,130,246,0.08)]'
+              : 'border-[rgba(255,255,255,0.07)] hover:border-[rgba(59,130,246,0.4)]',
           ].join(' ')}
         >
+          <div className="flex justify-center mb-4">
+            <Upload size={22} className={dragActive ? 'text-accent' : 'text-t3'} strokeWidth={1.5} />
+          </div>
           <div>
             <p className="text-t1 text-[1.1rem] font-semibold leading-tight">
               Drag and drop files here, or click to browse.
@@ -115,10 +122,10 @@ export default function EmptyState() {
             key={label}
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 + i * 0.07 }}
+            transition={{ delay: 0.2 + i * 0.07, duration: 0.26, ease: [0.22, 1, 0.36, 1] }}
             className="text-center"
           >
-            <p className="font-mono text-[1.3rem] text-accent font-medium">{val}</p>
+            <p className="font-mono text-[1.4rem] text-accent font-medium tracking-[-0.02em]">{val}</p>
             <p className="text-t3 text-[0.68rem] mt-1">{label}</p>
           </motion.div>
         ))}

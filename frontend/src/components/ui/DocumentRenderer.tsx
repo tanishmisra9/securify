@@ -23,7 +23,8 @@ export default function DocumentRenderer({
     <div
       ref={scrollContainerRef}
       onScroll={onScroll}
-      className="flex-1 min-h-0 overflow-y-auto rounded-xl border border-border bg-surface p-6 shadow-[0_16px_60px_rgba(0,0,0,0.35)]"
+      className="flex-1 overflow-y-auto overflow-x-hidden bg-surface rounded-xl border border-border p-5 font-mono text-[0.82rem] leading-[1.75] text-t1 min-h-0"
+      style={{ boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.04)' }}
     >
       <div className="mx-auto max-w-[780px] rounded-lg border border-border2/60 bg-[#f8fafc] text-slate-900 px-6 py-7">
         {lines.map((line, idx) => renderLine(line, idx, redacted))}
@@ -90,7 +91,7 @@ function renderInline(text: string, redacted: boolean): ReactNode[] {
       out.push(
         <span
           key={`ph-${start}`}
-          className="inline-block align-middle rounded-[3px] bg-black border border-neutral-800 h-[1.05em]"
+          className="inline-block align-middle rounded-[3px] bg-chip border border-chipBdr h-[1.05em]"
           style={{ width: `${widthCh}ch` }}
           aria-label="Redacted entity"
         />

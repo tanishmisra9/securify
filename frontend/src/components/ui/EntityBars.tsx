@@ -30,12 +30,12 @@ export default function EntityBars({ counts, confidences }: Props) {
             <span className="w-[16px] text-right text-[0.7rem] font-semibold text-t1 flex-shrink-0">
               {count}
             </span>
-            <div className="flex-1 h-[3px] bg-border2 rounded-full overflow-hidden min-w-[20px]">
+            <div className="flex-1 h-[4px] bg-[rgba(255,255,255,0.06)] rounded-full overflow-hidden min-w-[20px]">
               <motion.div
                 className="h-full bg-accent rounded-full"
                 initial={{ width: 0 }}
                 animate={{ width: `${pct}%` }}
-                transition={{ duration: 0.5, delay: i * 0.05 + 0.1, ease: 'easeOut' }}
+                transition={{ duration: 0.55, delay: i * 0.05 + 0.1, ease: [0.22, 1, 0.36, 1] }}
               />
             </div>
             <span className="w-[30px] text-right text-[0.63rem] text-t3 flex-shrink-0">
