@@ -1,10 +1,10 @@
 # Securify
 
-![License: MIT](https://img.shields.io/badge/license-MIT-blue) ![Python](https://img.shields.io/badge/python-3.11-3776AB?logo=python&logoColor=white) ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white) [![Live](https://img.shields.io/badge/live-railway.app-2ea44f)](https://securify-production-136f.up.railway.app)
+![License: MIT](https://img.shields.io/badge/license-MIT-blue) ![Python](https://img.shields.io/badge/python-3.11-3776AB?logo=python&logoColor=white) ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)
 
 Securify is a hackathon MVP that enables question-answering over sensitive documents while preventing PII leakage.
 
-Live website: [https://securify-production-136f.up.railway.app](https://securify-production-136f.up.railway.app)
+> **Note:** Securify was previously deployed on Railway (see `railway.toml`). That deployment was taken down in November 2026; run it locally using the instructions below.
 
 ## What It Does
 
